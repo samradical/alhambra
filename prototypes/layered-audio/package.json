@@ -8,12 +8,15 @@
   },
   "scripts": {
     "start": "budo index.js:bundle.js --host 0.0.0.0 --live --open -- -t babelify  | bistre ",
-    "build": "browserify index.js > bundle.js"
+    "build": "browserify index.js -t babelify --outfile bundle.js",
+    "build:prod": "browserify bundle.js -t babelify --outfile bundle_es5.js"
   },
   "keywords": [],
   "author": "",
   "license": "",
-  "dependencies": {},
+  "dependencies": {
+    "@stinkdigital/component-audio": "^0.1.48"
+  },
   "browserify": {
     "transform": [
       "babelify"

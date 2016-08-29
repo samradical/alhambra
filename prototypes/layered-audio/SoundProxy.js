@@ -1,5 +1,4 @@
 import ProxyP from 'proxy-polyfill'
-'use strict'
 export default class SoundProxy {
     constructor(options, callback) {
         this._options = options
