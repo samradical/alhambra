@@ -1,0 +1,38 @@
+@import 'colors';
+@import 'media-queries';
+
+.app {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+.app__header {
+  z-index: 900;
+  position: fixed;
+  top: 3.5vw;
+  left: 3.5vw;
+  font-size: 25px;
+  font-weight: 900;
+  color: $c-white;
+  text-transform: uppercase;
+}
+
+.app__burger {
+  z-index: 900;
+  position: fixed;
+  top: 3.25vw;
+  right: 2.5vw;
+
+  @media #{$mq-phone} {
+    top: 8vw;
+    right: 8vw;
+  }
+
+  @media #{$mq-phablet} {
+    top: 7vw;
+    right: 7vw;
+  }
+}
