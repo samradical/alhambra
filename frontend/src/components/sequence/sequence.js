@@ -17,14 +17,17 @@ class Sequence extends Component {
     const { browser, sequence, tour } = this.props;
     let _n = nextProps.tour.locationIndex
     if (tour.locationIndex !== _n &&
-      !isNaN(_n)
+      !isNaN(_n) &&
+      tour.isIn
     ) {
       this._newLocation(nextProps.tour.locationIndex)
+    } else {
+      MagipackPlayer.hide()
     }
 
     if (nextProps.tour.speakingPlaying) {
       MagipackPlayer.play()
-    }else{
+    } else {
       MagipackPlayer.pauseAndHide()
     }
   }
@@ -33,11 +36,10 @@ class Sequence extends Component {
     const { sequence } = this.props;
     let _l = sequence.toArray()
     let _o = _.assign({}, _l[index])
-    MagipackPlayer.load(_o, this.refs.magiSrc)
-      .then(loader => {
-
-      }).finally()
+    MagipackPlayer.load(_o, this.refs.magiSrc).finally()
   }
+
+
 
   render() {
     const { browser, sequence, tour } = this.props;

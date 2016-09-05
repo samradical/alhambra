@@ -93,7 +93,7 @@ const M = (() => {
     _counter = 0
   }
 
-  function _hide() {
+  function hide() {
     if (_el) {
       _el.classList.add('is-hidden')
     }
@@ -107,7 +107,7 @@ const M = (() => {
 
   function pauseAndHide() {
     _paused = true
-    _hide()
+    hide()
   }
 
   function resume() {
@@ -128,6 +128,7 @@ const M = (() => {
   function load(obj, el) {
     _el = el
     _destroy()
+    _paused = true
     _loading = true
     return _load(obj).then(loader => {
       _loader = loader
@@ -145,6 +146,7 @@ const M = (() => {
 
   return {
     play,
+    hide,
     pauseAndHide,
     load,
     loadAndPlay,

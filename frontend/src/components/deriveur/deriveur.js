@@ -9,6 +9,9 @@ import { connect } from 'react-redux';
 
 import Dervieur from '@samelie/deriveur';
 import { LOCATIONS } from '@samelie/deriveur';
+import {
+  REMOTE_ASSETS_DIR
+} from '../../constants/config';
 
 const OUTSIDE_BARBI_NEAR = [
   { id: 'loc0', latitude: 51.518562, longitude: -0.092574, radius: 40 },
@@ -44,6 +47,12 @@ const HOME_AREA = [
   { id: 'loc2', latitude: 51.584180, longitude: -0.106239, radius: 10 },
   { id: 'loc3', latitude: 51.584306, longitude: -0.105563, radius: 7 },
 ]
+const HOME_AREA_WALK = [
+  { id: 'loc0', latitude: 51.584364, longitude: -0.105178, radius: 30 },
+  { id: 'loc1', latitude: 51.583858, longitude: -0.106303, radius: 50 },
+  { id: 'loc2', latitude: 51.583762, longitude: -0.104612, radius: 30 },
+  { id: 'loc3', latitude: 51.584331, longitude: -0.103272, radius: 60 },
+]
 
 class Deriveur extends Component {
 
@@ -74,9 +83,10 @@ class Deriveur extends Component {
       return
     }
     this._devriveur = new Dervieur(alhambra.toArray(),
-      HOME_AREA, {
-        noVisualMap: true,
+      HOME_AREA_WALK, {
+        noVisualMap: false,
         noGeo: false,
+        assetsUrl: REMOTE_ASSETS_DIR
       })
     this._devriveur.on('speaking:playing', () => speakingChanged())
     this._devriveur.on('map:entering', (loc, index) => {

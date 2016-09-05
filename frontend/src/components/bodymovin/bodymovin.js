@@ -24,6 +24,9 @@ class Bodymovin extends Component {
 
   componentWillReceiveProps(nextProps) {
     if(this._bodyAnim){
+      console.log("0--------------------------");
+      console.log(nextProps.tour.dominantPlaying);
+      console.log("0--------------------------");
       if(nextProps.tour.dominantPlaying){
           this._bodyAnim.play()
       }else{

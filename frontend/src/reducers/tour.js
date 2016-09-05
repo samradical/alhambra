@@ -18,6 +18,7 @@ const InitialState = Record({
   },
   locationIndex: NaN,
   speakingCounter: 0,
+  isIn: false,
   state: 'out',
   bearing: 0,
   speakingPlaying: false,
@@ -39,6 +40,7 @@ export default function tour(state = initialState, action) {
         return state.set('location', action.payload.location)
           .set('locationIndex', action.payload.locationIndex)
           .set('state', action.payload.state)
+          .set('isIn', action.payload.state === 'in')
       }
     case TOUR_SPEAKING_CHANGED:
       {
