@@ -3,6 +3,8 @@ import { Link } from 'react-router';
 import { locationChanged } from '../../actions/tour';
 import { speakingChanged } from '../../actions/tour';
 import { bearingChanged } from '../../actions/tour';
+import { speakingPlayback } from '../../actions/tour';
+import { dominantPlayback } from '../../actions/tour';
 import { connect } from 'react-redux';
 
 import Dervieur from '@samelie/deriveur';
@@ -31,9 +33,9 @@ const PABLO = [
 
 const CARA = [
   { id: 'loc0', latitude: 51.574840, longitude: -0.086101, radius: 10 },
-  { id: 'loc1', latitude: 51.574806,  longitude: -0.086753, radius: 10 },
-  { id: 'loc2', latitude: 51.574756,  longitude:  -0.087582, radius: 20 },
-  { id: 'loc3', latitude: 51.574783,  longitude:  -0.088020, radius: 20 },
+  { id: 'loc1', latitude: 51.574806, longitude: -0.086753, radius: 10 },
+  { id: 'loc2', latitude: 51.574756, longitude: -0.087582, radius: 20 },
+  { id: 'loc3', latitude: 51.574783, longitude: -0.088020, radius: 20 },
 ]
 
 const HOME_AREA = [
@@ -59,24 +61,52 @@ class Deriveur extends Component {
   }
 
   _initDeriveur() {
-    const { browser, alhambra, locationChanged, speakingChanged } = this.props;
+    const {
+      browser,
+      alhambra,
+      locationChanged,
+      speakingChanged,
+      dominantPlayback,
+      speakingPlayback
+    } = this.props;
+
     if (this._devriveur) {
       return
     }
     this._devriveur = new Dervieur(alhambra.toArray(),
       HOME_AREA, {
-        noVisualMap: false,
+        noVisualMap: true,
         noGeo: false,
       })
     this._devriveur.on('speaking:playing', () => speakingChanged())
     this._devriveur.on('map:entering', (loc, index) => {
-      locationChanged({ location: loc, locationIndex: index, state: 'in' })
+      locationChanged({
+        location: loc,
+        locationIndex: index,
+        state: 'in'
+      })
     })
     this._devriveur.on('map:leaving', (loc, index) => {
-      locationChanged({ state: 'out' })
+      locationChanged({
+        location: loc,
+        locationIndex: index,
+        state: 'out'
+      })
     })
     this._devriveur.on('map:bearing', (bearing) => {
       bearingChanged(bearing)
+    })
+    this._devriveur.on('sound:speaking:playing', () => {
+      speakingPlayback(true)
+    })
+    this._devriveur.on('sound:speaking:ended', () => {
+      speakingPlayback(false)
+    })
+    this._devriveur.on('sound:dominant:playing', () => {
+      dominantPlayback(true)
+    })
+    this._devriveur.on('sound:dominant:ended', () => {
+      dominantPlayback(false)
     })
   }
 
@@ -104,4 +134,6 @@ export default connect(({ alhambra, browser, tour }) => ({
   locationChanged,
   bearingChanged,
   speakingChanged,
+  speakingPlayback,
+  dominantPlayback,
 })(Deriveur);

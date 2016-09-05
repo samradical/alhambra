@@ -13,12 +13,23 @@ class Bodymovin extends Component {
   constructor() {
     super()
     this.state = {
-      locationIndex: false,
+      speakingPlaying: 0,
+      dominantPlaying: 0,
     };
   }
 
   componentDidMount() {
 
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if(this._bodyAnim){
+      if(nextProps.tour.dominantPlaying){
+          this._bodyAnim.play()
+      }else{
+          this._bodyAnim.pause()
+      }
+    }
   }
 
   _onNewSpeaking() {
@@ -42,19 +53,18 @@ class Bodymovin extends Component {
     const { bodymovin } = this.props;
     const BM = window.bodymovin
     if (!isNaN(tour.locationIndex) &&
-        this._locationIndex !== tour.locationIndex) {
+      this._locationIndex !== tour.locationIndex) {
       var animData = {
         wrapper: this.refs.bodymovin,
         renderer: 'canvas',
         animType: 'canvas',
         loop: true,
         prerender: true,
-        autoplay: true,
+        autoplay: false,
         path: `${ASSETS_DIR}bodymovin/${tour.locationIndex}/data.json`,
-        rendererSettings: {
-        }
+        rendererSettings: {}
       };
-      if(this._bodyAnim){
+      if (this._bodyAnim) {
         this._bodyAnim.destroy()
         this._bodyAnim = null
       }
@@ -72,7 +82,7 @@ class Bodymovin extends Component {
     }
 
     this._newLocationAnimation()
-    //this._onNewSpeaking()
+      //this._onNewSpeaking()
 
     return (
       <div ref="bodymovin" className="o-page bodymovin"></div>

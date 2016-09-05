@@ -232,7 +232,7 @@ function upload(dir = FINAL_UPLOAD) {
        console.log(_uploadDir);*/
     //console.log(`Copied files to ${_uploadDir}`);
     console.log(_uploadDir);
-  exec(`gsutil -m cp -Rn -a public-read ${_uploadDir} ${BUCKET}`)
+    exec(`gsutil -m cp -Rn -a public-read ${_uploadDir} ${BUCKET}`)
     //})
 }
 

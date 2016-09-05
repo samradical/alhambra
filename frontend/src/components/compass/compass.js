@@ -53,16 +53,16 @@ class Compass extends Component {
     if(nextProps.tour.state === 'out'){
       this.showCompass()
     }else{
-      //this.hideCompass()
+      this.hideCompass()
     }
   }
 
   render() {
     const { browser, tour } = this.props;
     return (
-      <div className="o-page compass">
+      <div ref="view" className="o-page compass">
         <div className="compass-ui">
-          <img ref="compass" src={`${IMAGE_DIR}compass_arrow.svg`}></img>
+          <img ref="compassArrow" src={`${IMAGE_DIR}compass_arrow.svg`}></img>
           <div className="compass-title">next location:{tour.location.id}</div>
           <div className="compass-distance">{tour.location.distance} meters away</div>
         </div>
@@ -71,19 +71,19 @@ class Compass extends Component {
   }
 
   showCompass() {
-    this.refs.compass.classList.remove('is-hidden')
+    this.refs.view.classList.remove('is-hidden')
     this._compassHidden = false
   }
 
   hideCompass() {
-    this.refs.compass.classList.add('is-hidden')
+    this.refs.view.classList.add('is-hidden')
     this._compassHidden = true
   }
 
   rotateCompass(heading) {
     if (!isNaN(heading) &&
       !this._compassHidden) {
-      TweenMax.set(this.refs.compass, {
+      TweenMax.set(this.refs.compassArrow, {
         rotation: heading,
         transformOrigin: '50% 50%'
       })

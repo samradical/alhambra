@@ -2,6 +2,8 @@ import {
   TOUR_LOCATION_CHANGED,
   TOUR_BEARING_CHANGED,
   TOUR_SPEAKING_CHANGED,
+  TOUR_SPEAKING_PLAYBACK,
+  TOUR_DOMINANT_PLAYBACK,
 } from '../constants/action-types';
 
 import { Record } from 'immutable';
@@ -12,12 +14,14 @@ import { Record } from 'immutable';
  */
 const InitialState = Record({
   location: {
-    distance:1
+    distance: 1
   },
   locationIndex: NaN,
   speakingCounter: 0,
   state: 'out',
   bearing: 0,
+  speakingPlaying: false,
+  dominantPlaying: false,
 });
 
 const initialState = new InitialState;
@@ -32,12 +36,9 @@ export default function tour(state = initialState, action) {
   switch (action.type) {
     case TOUR_LOCATION_CHANGED:
       {
-        if (action.payload.locationIndex !== state.get('locationIndex')) {
-          return state.set('location', action.payload.location)
-            .set('locationIndex', action.payload.locationIndex)
-            .set('state', action.payload.state)
-        }
-        return state
+        return state.set('location', action.payload.location)
+          .set('locationIndex', action.payload.locationIndex)
+          .set('state', action.payload.state)
       }
     case TOUR_SPEAKING_CHANGED:
       {
@@ -47,6 +48,14 @@ export default function tour(state = initialState, action) {
     case TOUR_BEARING_CHANGED:
       {
         return state.set('bearing', action.payload)
+      }
+    case TOUR_SPEAKING_PLAYBACK:
+      {
+        return state.set('speakingPlaying', action.payload)
+      }
+    case TOUR_DOMINANT_PLAYBACK:
+      {
+        return state.set('dominantPlaying', action.payload)
       }
     default:
       {

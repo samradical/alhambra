@@ -8,6 +8,7 @@ import Dervieur from '../../components/deriveur/deriveur';
 import Bodymovin from '../../components/bodymovin/bodymovin';
 import Sequence from '../../components/sequence/sequence';
 import Compass from '../../components/compass/compass';
+import LocationCover from '../../components/location-cover/location-cover';
 
 class TourPage extends Component {
 
@@ -34,6 +35,7 @@ class TourPage extends Component {
         <Bodymovin/>
         <Sequence/>
         <Compass/>
+        <LocationCover/>
       </div>
     );
   }

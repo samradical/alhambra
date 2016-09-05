@@ -21,13 +21,22 @@ class Sequence extends Component {
     ) {
       this._newLocation(nextProps.tour.locationIndex)
     }
+
+    if (nextProps.tour.speakingPlaying) {
+      MagipackPlayer.play()
+    }else{
+      MagipackPlayer.pauseAndHide()
+    }
   }
 
   _newLocation(index) {
     const { sequence } = this.props;
     let _l = sequence.toArray()
     let _o = _.assign({}, _l[index])
-    MagipackPlayer.loadAndPlay(_o, this.refs.magiSrc)
+    MagipackPlayer.load(_o, this.refs.magiSrc)
+      .then(loader => {
+
+      }).finally()
   }
 
   render() {

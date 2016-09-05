@@ -41,7 +41,17 @@ const M = (() => {
     _el,
     _magipack,
     _fileNames,
+    _loading = true,
     _paused = false
+
+  function _destroy() {
+    if (_loader) {
+      _loader.destroy()
+    }
+    if (_magipack) {
+      _magipack = null
+    }
+  }
 
   function _load(obj) {
 
@@ -62,15 +72,14 @@ const M = (() => {
   }
 
   function _update() {
-    let _l = _fileNames.length
-    if (_paused) {
-      return
-    }
-    if (_l > 0) {
-      _el.src = _magipack.getURI(_fileNames[_counter])
-      _counter++;
-      if (_counter >= _l) {
-        _counter = 0
+    if(!_paused && !_loading){
+      let _l = _fileNames.length
+      if (_l > 0) {
+        _el.src = _magipack.getURI(_fileNames[_counter])
+        _counter++;
+        if (_counter >= _l) {
+          _counter = 0
+        }
       }
     }
     _rId = animationFrame.request(_update);
@@ -78,25 +87,66 @@ const M = (() => {
 
   function _stop() {}
 
-  function _play(imageFile, packFile) {
-    _magipack = new Magipack(packFile, imageFile);
-    _fileNames = imageFile.map(arr => {
-      return arr[0]
-    })
+  function play() {
+    _show()
+    _paused = false
     _counter = 0
+  }
 
-    _rId = animationFrame.request(_update);
+  function _hide() {
+    if (_el) {
+      _el.classList.add('is-hidden')
+    }
+  }
+
+  function _show() {
+    if (_el) {
+      _el.classList.remove('is-hidden')
+    }
+  }
+
+  function pauseAndHide() {
+    _paused = true
+    _hide()
+  }
+
+  function resume() {
+    if (_paused) {
+      _paused = false
+    } else {
+      play()
+    }
   }
 
   function loadAndPlay(obj, el) {
     _el = el
-    _load(obj).then(loader => {
+    load(obj).then(loader => {
+      play()
+    }).finally()
+  }
+
+  function load(obj, el) {
+    _el = el
+    _destroy()
+    _loading = true
+    return _load(obj).then(loader => {
       _loader = loader
-      _play(loader.get('images'), loader.get('pack'), el)
+      let imageFile = loader.get('images')
+      _magipack = new Magipack(loader.get('pack'), imageFile);
+      _fileNames = imageFile.map(arr => {
+        return arr[0]
+      })
+      _loading = false
+      return _loader
     })
   }
 
+  _update()
+
   return {
+    play,
+    pauseAndHide,
+    load,
     loadAndPlay,
   }
 })()
