@@ -206,8 +206,9 @@ function copy(sourceDir, uploadDir = FINAL_UPLOAD) {
 /*
 node prepare_upload.js --rawDir "../_upload" --upload
 */
-function upload(dir = FINAL_UPLOAD) {
+function upload(dir = FINAL_UPLOAD, force = false) {
   let _uploadDir = PATH.join(CONTENT_DIR, dir)
+  let _rn = force ? '-r' : '-Rn'
     /* let _splitDir = PATH.join(CONTENT_DIR, CONVERTED_SPLIT_DIR)
      let _uploadDir = PATH.join(CONTENT_DIR, CONVERTED_UPLOAD_DIR)
      var files = readDir.readSync(_splitDir, ['**.mp3', '**.ogg'], readDir.ABSOLUTE_PATHS);
@@ -232,7 +233,7 @@ function upload(dir = FINAL_UPLOAD) {
        console.log(_uploadDir);*/
     //console.log(`Copied files to ${_uploadDir}`);
     console.log(_uploadDir);
-    exec(`gsutil -m cp -Rn -a public-read ${_uploadDir} ${BUCKET}`)
+    exec(`gsutil -m cp ${_rn} -a public-read ${_uploadDir} ${BUCKET}`)
     //})
 }
 
@@ -250,7 +251,7 @@ if (argv.split) {
 }
 
 if (argv.upload) {
-  upload(argv.dir)
+  upload(argv.dir, argv.force)
 }
 
 if (argv.deleteWavs) {

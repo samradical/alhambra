@@ -102,8 +102,8 @@ module.exports = env => {
         'process.env': {
           //APP_DOMAIN:'"/"',
           APP_DOMAIN: '"/alhambra/home01"',
-          ASSETS_DIR: '"https://storage.googleapis.com/samrad-alhambra/www-assets/"',
-          //ASSETS_DIR : '""',
+          //ASSETS_DIR: '"https://storage.googleapis.com/samrad-alhambra/www-assets/"',
+          ASSETS_DIR : '""',
           REMOTE_ASSETS_DIR: '"https://storage.googleapis.com/samrad-alhambra/www-assets/"'
         }
       }),
