@@ -20,11 +20,6 @@ class Sequence extends Component {
   componentWillReceiveProps(nextProps) {
     const { browser, sequence, tour } = this.props;
     let _n = nextProps.tour.locationIndex
-    console.log("0----------------------------------------------------");
-    console.log(tour.locationIndex);
-    console.log(_n);
-    console.log(tour.isIn);
-    console.log("0----------------------------------------------------");
     if (tour.locationIndex !== _n &&
       !isNaN(_n) &&
       tour.isIn

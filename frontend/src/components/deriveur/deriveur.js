@@ -47,6 +47,12 @@ const HOME_AREA = [
   { id: 'loc2', latitude: 51.584180, longitude: -0.106239, radius: 10 },
   { id: 'loc3', latitude: 51.584306, longitude: -0.105563, radius: 7 },
 ]
+const ALHAMBRA = [
+  { id: 'loc0', latitude: 37.7987, longitude: -122.42243, radius: 30 },
+  { id: 'loc1', latitude: 37.79831, longitude: -122.42219, radius: 10 },
+  { id: 'loc2', latitude: 37.79812, longitude: -122.42214, radius: 15 },
+  { id: 'loc3', latitude: 37.79785, longitude: -122.42185, radius: 16 },
+]
 const HOME_AREA_WALK = [
   { id: 'loc0', latitude: 51.584364, longitude: -0.105178, radius: 30 },
   { id: 'loc1', latitude: 51.583858, longitude: -0.106303, radius: 50 },
@@ -85,7 +91,7 @@ class Deriveur extends Component {
     this._devriveur = new Dervieur(alhambra.toArray(),
       HOME_AREA_WALK, {
         noVisualMap: false,
-        noGeo: true,
+        noGeo: false,
         assetsUrl: REMOTE_ASSETS_DIR
       })
     this._devriveur.on('speaking:playing', () => speakingChanged())
