@@ -55,7 +55,7 @@ const ALHAMBRA = [
 ]
 const HOME_AREA_WALK = [
   { id: 'loc0', latitude: 51.584364, longitude: -0.105178, radius: 30 },
-  { id: 'loc1', latitude: 51.583858, longitude: -0.106303, radius: 50 },
+  { id: 'loc1', latitude: 51.583858, longitude: -0.106303, radius: 30 },
   { id: 'loc2', latitude: 51.583762, longitude: -0.104612, radius: 30 },
   { id: 'loc3', latitude: 51.584331, longitude: -0.103272, radius: 60 },
 ]

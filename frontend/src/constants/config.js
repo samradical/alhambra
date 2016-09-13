@@ -11,4 +11,5 @@ export const IMAGE_DIR = `${REMOTE_ASSETS_DIR}image/`;
 export const SVG_DIR = `${REMOTE_ASSETS_DIR}svg/`;
 
 //TOUR
+export const FILTER_ONLY_MP3 = true
 export const TIME_ON_LOCATION_COVER = 10000
