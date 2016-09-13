@@ -85,7 +85,7 @@ class Deriveur extends Component {
     this._devriveur = new Dervieur(alhambra.toArray(),
       HOME_AREA_WALK, {
         noVisualMap: false,
-        noGeo: false,
+        noGeo: true,
         assetsUrl: REMOTE_ASSETS_DIR
       })
     this._devriveur.on('speaking:playing', () => speakingChanged())

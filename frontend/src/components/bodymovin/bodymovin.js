@@ -5,7 +5,8 @@ import { Link } from 'react-router';
 import { connect } from 'react-redux';
 
 import {
-  ASSETS_DIR
+  ASSETS_DIR,
+  REMOTE_ASSETS_DIR,
 } from '../../constants/config';
 
 class Bodymovin extends Component {
@@ -23,31 +24,34 @@ class Bodymovin extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if(this._bodyAnim){
-      console.log("0--------------------------");
-      console.log(nextProps.tour.dominantPlaying);
-      console.log("0--------------------------");
-      if(nextProps.tour.dominantPlaying){
-          this._bodyAnim.play()
-      }else{
-          this._bodyAnim.pause()
-      }
+    if (nextProps.tour.dominantPlaying) {
+      this._playShort()
+    } else if (nextProps.tour.speakingPlaying) {
+      this._playLong()
     }
   }
 
-  _onNewSpeaking() {
-    const { bodymovin } = this.props;
-    const locIndex = this._locationIndex
-    if (this._bodyAnim && !isNaN(locIndex)) {
-      let _roll = Math.floor(Math.random() * 3)
-      let l_ = this._bodyAnim.getAnimationLayers()
-      if (l_.length) {
-        let _arr = bodymovin.toArray()
-        let _ll1 = _arr[locIndex].layers[1].colors[_roll]
-        let _ll2 = _arr[locIndex].layers[2].colors[_roll]
-        l_[1].stylesList[0].co = `rgb(${_ll1[0]},${_ll1[1]},${_ll1[2]})`
-        l_[2].stylesList[0].co = `rgb(${_ll2[0]},${_ll2[1]},${_ll2[2]})`
-      }
+  _playShort() {
+    if (!this._isPlayingLong) {
+      return
+    }
+    this._isPlayingLong = false
+    this.refs.bodymovinLong.classList.add('is-hidden')
+    this.refs.bodymovinShort.classList.remove('is-hidden')
+    if (this._bodyAnimShort) {
+      this._bodyAnimShort.goToAndPlay(0, false)
+    }
+  }
+
+  _playLong() {
+    if (this._isPlayingLong) {
+      return
+    }
+    this._isPlayingLong = true
+    this.refs.bodymovinShort.classList.add('is-hidden')
+    this.refs.bodymovinLong.classList.remove('is-hidden')
+    if (this._bodyAnimLong) {
+      this._bodyAnimLong.goToAndPlay(0, false)
     }
   }
 
@@ -58,20 +62,38 @@ class Bodymovin extends Component {
     if (!isNaN(tour.locationIndex) &&
       this._locationIndex !== tour.locationIndex) {
       var animData = {
-        wrapper: this.refs.bodymovin,
+        wrapper: this.refs.bodymovinShort,
         renderer: 'canvas',
         animType: 'canvas',
         loop: true,
         prerender: true,
         autoplay: false,
-        path: `${ASSETS_DIR}bodymovin/${tour.locationIndex}/data.json`,
+        path: `${REMOTE_ASSETS_DIR}bodymovin/loc${tour.locationIndex}/visuals/color_short/data.json`,
         rendererSettings: {}
       };
-      if (this._bodyAnim) {
-        this._bodyAnim.destroy()
-        this._bodyAnim = null
+      if (this._bodyAnimShort) {
+        this._bodyAnimShort.destroy()
+        this._bodyAnimShort = null
       }
-      this._bodyAnim = BM.loadAnimation(animData);
+      this._bodyAnimShort = BM.loadAnimation(animData);
+
+
+      var animData = {
+        wrapper: this.refs.bodymovinLong,
+        renderer: 'canvas',
+        animType: 'canvas',
+        loop: true,
+        prerender: true,
+        autoplay: false,
+        path: `${REMOTE_ASSETS_DIR}bodymovin/loc${tour.locationIndex}/visuals/color_long/data.json`,
+        rendererSettings: {}
+      };
+      if (this._bodyAnimLong) {
+        this._bodyAnimLong.destroy()
+        this._bodyAnimLong = null
+      }
+      this._bodyAnimLong = BM.loadAnimation(animData);
+
     }
     this._locationIndex = tour.locationIndex
   }
@@ -88,7 +110,10 @@ class Bodymovin extends Component {
       //this._onNewSpeaking()
 
     return (
-      <div ref="bodymovin" className="o-page bodymovin"></div>
+      <div>
+        <div id="shortDom" ref="bodymovinShort" className="o-page bodymovin"></div>
+        <div id="longAmb" ref="bodymovinLong" className="o-page bodymovin"></div>
+      </div>
     );
   }
 }

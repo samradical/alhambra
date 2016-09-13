@@ -2,5 +2,17 @@
     {
         "images": "sequence-out/loc0/images.json",
         "pack": "sequence-out/loc0/images.pack"
+    },
+    {
+        "images": "sequence-out/loc1/images.json",
+        "pack": "sequence-out/loc1/images.pack"
+    },
+    {
+        "images": "sequence-out/loc2/images.json",
+        "pack": "sequence-out/loc2/images.pack"
+    },
+    {
+        "images": "sequence-out/loc3/images.json",
+        "pack": "sequence-out/loc3/images.pack"
     }
 ]

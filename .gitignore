@@ -39,7 +39,7 @@ build/*
 *.zip
 *.m4a
 
-asset_preperation/sequence/*
+asset_preperation/sequence/**
+asset_preperation/sequence
 asset_preperation/sequence-out/*
-
 www-assets

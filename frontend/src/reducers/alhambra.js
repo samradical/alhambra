@@ -72,6 +72,7 @@ function _findFilesRecursive(location, layerId) {
   let _correctType = location.children.filter(folder => {
     return folder.name === layerId
   })
+
   if (location.name === 'transitions') {
     __re(location.children)
   } else {

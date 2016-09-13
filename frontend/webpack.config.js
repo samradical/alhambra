@@ -101,9 +101,9 @@ module.exports = env => {
       new webpack.DefinePlugin({
         'process.env': {
           //APP_DOMAIN:'"/"',
-          APP_DOMAIN: '"/alhambra/home03"',
-          //ASSETS_DIR: '"https://storage.googleapis.com/samrad-alhambra/www-assets/"',
-          ASSETS_DIR : '""',
+          APP_DOMAIN: '"/alhambra/home04"',
+          ASSETS_DIR: '"https://storage.googleapis.com/samrad-alhambra/www-assets/"',
+          //ASSETS_DIR : '""',
           REMOTE_ASSETS_DIR: '"https://storage.googleapis.com/samrad-alhambra/www-assets/"'
         }
       }),

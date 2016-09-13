@@ -7,6 +7,10 @@ import { connect } from 'react-redux';
 
 import MagipackPlayer from './magipack_player'
 
+import {
+  REMOTE_ASSETS_DIR
+} from '../../constants/config';
+
 class Sequence extends Component {
 
   componentDidMount() {
@@ -16,13 +20,18 @@ class Sequence extends Component {
   componentWillReceiveProps(nextProps) {
     const { browser, sequence, tour } = this.props;
     let _n = nextProps.tour.locationIndex
+    console.log("0----------------------------------------------------");
+    console.log(tour.locationIndex);
+    console.log(_n);
+    console.log(tour.isIn);
+    console.log("0----------------------------------------------------");
     if (tour.locationIndex !== _n &&
       !isNaN(_n) &&
       tour.isIn
     ) {
       this._newLocation(nextProps.tour.locationIndex)
     } else {
-      MagipackPlayer.hide()
+      //MagipackPlayer.hide()
     }
 
     if (nextProps.tour.speakingPlaying) {
@@ -36,7 +45,9 @@ class Sequence extends Component {
     const { sequence } = this.props;
     let _l = sequence.toArray()
     let _o = _.assign({}, _l[index])
-    MagipackPlayer.load(_o, this.refs.magiSrc).finally()
+    console.log(_.clone(_o));
+    console.log(this.refs.magiSrc);
+    MagipackPlayer.loadAndPlay(_o, this.refs.magiSrc)
   }
 
 

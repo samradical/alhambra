@@ -9,22 +9,27 @@ import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
 import _ from 'lodash';
 import { connect } from 'react-redux';
+import Loader from 'assets-loader'
 
 class LocationCover extends Component {
 
-  componentDidMount() {}
+  constructor(){
+    super()
+    this.state = {}
+  }
+
+  componentDidMount() {
+    this.setState({coverStyle:{backgroundImage:`url()`}})
+  }
 
   componentWillReceiveProps(nextProps) {
     const { browser, tour } = this.props;
     let _n = nextProps.tour.locationIndex
-    console.log("TOUR IS IN", tour.isIn);
     if (tour.locationIndex !== _n &&
       !isNaN(_n) &&
       tour.isIn
     ) {
       this._newLocation(nextProps.tour.locationIndex)
-    } else {
-      this.hide()
     }
   }
 
@@ -38,17 +43,41 @@ class LocationCover extends Component {
     this.refs.locationCover.classList.add('show')
   }
 
+  _preload(url, callback) {
+    if (this._preloader) {
+      this._preloader.destroy()
+      this._preloader = null
+    }
+    this._preloader = new Loader({
+      assets: [{
+        url: url
+      }]
+    })
+    this._preloader.on('complete', (map) => {
+      callback()
+      this._preloader.destroy()
+      this._preloader = null
+    })
+    this._preloader.start()
+  }
+
 
   _newLocation(index) {
     const { browser, tour } = this.props;
     if (tour.state === 'in') {
-      if (!isNaN(tour.locationIndex)) {
+      if (!isNaN(index)) {
+
         clearTimeout(this._to)
-        this.show()
-        this.refs.locationCover.style.backgroundImage = `url(${IMAGE_DIR}tour/loc${tour.locationIndex}/cover.jpg)`
-        this._to = setTimeout(() => {
-          this.hide()
-        }, TIME_ON_LOCATION_COVER)
+        let _url = `${IMAGE_DIR}tour/loc${index}/cover.jpg`
+        this._preload(
+          _url,
+          () => {
+            this.show()
+            this.setState({coverStyle:{backgroundImage:`url(${_url})`}})
+            this._to = setTimeout(() => {
+              this.hide()
+            }, TIME_ON_LOCATION_COVER)
+          })
       }
     } else {
       this.refs.locationCover.style.backgroundImage = null
@@ -58,7 +87,7 @@ class LocationCover extends Component {
   render() {
     const { browser, tour } = this.props;
     return (
-      <div ref="locationCover" className="o-page location-cover">
+      <div ref="locationCover" style={this.state.coverStyle}className="o-page location-cover">
       </div>
     );
   }
