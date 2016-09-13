@@ -89,7 +89,7 @@ class Deriveur extends Component {
       return
     }
     this._devriveur = new Dervieur(alhambra.toArray(),
-      HOME_AREA_WALK, {
+      ALHAMBRA, {
         noVisualMap: false,
         noGeo: false,
         assetsUrl: REMOTE_ASSETS_DIR
