@@ -7,6 +7,10 @@ import { createHistory } from 'history';
 import { Router, useRouterHistory } from 'react-router';
 import { syncHistoryWithStore } from 'react-router-redux';
 
+import {
+  RESIZE,
+} from './constants/action-types';
+
 import configureStore from './store/configure-store';
 import configureRoutes from './routes/configure-routes';
 
@@ -23,6 +27,14 @@ const store = configureStore({
 });
 const histroy = syncHistoryWithStore(browserHistory, store);
 const routes = configureRoutes();
+
+
+window.addEventListener('reszie', ()=>{
+  store.dispatch({
+    type:RESIZE,
+    payload:{width:window.innerWidth, height:window.innerHeight}
+  })
+})
 
 ReactDom.render(
   <Provider store={store}>

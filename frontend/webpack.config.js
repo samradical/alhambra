@@ -100,8 +100,8 @@ module.exports = env => {
     plugins: removeEmpty([
       new webpack.DefinePlugin({
         'process.env': {
-          //APP_DOMAIN:'"/"',
-          APP_DOMAIN: '"/alhambra/test01"',
+          APP_DOMAIN:'"/"',
+          //APP_DOMAIN: '"/alhambra/test01"',
           ASSETS_DIR: '"https://storage.googleapis.com/samrad-alhambra/www-assets/"',
           //ASSETS_DIR : '""',
           REMOTE_ASSETS_DIR: '"https://storage.googleapis.com/samrad-alhambra/www-assets/"'

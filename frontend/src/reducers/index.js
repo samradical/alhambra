@@ -30,3 +30,4 @@ export default combineReducers({
     desktopXL: 1920,
   }),
 });
+

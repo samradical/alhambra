@@ -19,7 +19,7 @@ var bodymovinfiles = readDir.readSync(ROOT, ['*/**'], readDir.ABSOLUTE_PATHS)
 bodymovinfiles.forEach(p => {
   let _p = PATH.parse(p)
   let _goodPart = _p.dir.replace(PATH.resolve(ROOT), "")
-  let _dest = PATH.join(__dirname, '../www-assets/assets/bodymovin', _goodPart)
+  let _dest = PATH.join(__dirname, '../frontend/dist/assets/bodymovin', _goodPart)
   if (!FS.existsSync(_dest)) {
     FS.mkdirpSync(_dest)
   }
