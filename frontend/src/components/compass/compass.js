@@ -63,9 +63,6 @@ class Compass extends Component {
 
   render() {
     const { browser, tour, resize } = this.props;
-    console.log("*************************************");
-    console.log(tour.nextLocation);
-    console.log("*************************************");
     if (!tour.nextLocation) {
       return (<div ref="view" className="o-page compass"></div>)
     }

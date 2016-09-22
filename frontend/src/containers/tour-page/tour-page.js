@@ -9,6 +9,9 @@ import Bodymovin from '../../components/bodymovin/bodymovin';
 import Sequence from '../../components/sequence/sequence';
 import Compass from '../../components/compass/compass';
 import LocationCover from '../../components/location-cover/location-cover';
+import TourMap from '../../components/tour-map/tour-map';
+import TourHome from '../../components/tour-home/tour-home';
+import TourUi from '../../components/tour-ui/tour-ui';
 
 class TourPage extends Component {
 
@@ -36,6 +39,9 @@ class TourPage extends Component {
         <Sequence/>
         <LocationCover/>
         <Compass/>
+        <TourMap/>
+        <TourHome/>
+        <TourUi/>
       </div>
     );
   }

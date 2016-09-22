@@ -6,6 +6,9 @@ import {
   TOUR_DOMINANT_PLAYBACK,
   TOUR_AMBIENT_PLAYBACK,
   TOUR_NEXT_LOCATION,
+  TOUR_SHOW_MAP,
+  TOUR_USER_COORDS_CHANGED,
+  TOUR_PAUSE_EXPERIENCE,
 } from '../constants/action-types';
 
 export function locationChanged(payload = {}) {
@@ -58,6 +61,25 @@ export function ambientPlayback(payload = {}) {
 export function nextLocation(payload = {}) {
   return {
     type: TOUR_NEXT_LOCATION,
+    payload: payload
+  };
+}
+export function showMap(payload = {}) {
+  return {
+    type: TOUR_SHOW_MAP,
+    payload: payload
+  };
+}
+
+export function userCoordsChanged(payload = {}) {
+  return {
+    type: TOUR_USER_COORDS_CHANGED,
+    payload: payload
+  };
+}
+export function experiencePaused(payload = {}) {
+  return {
+    type: TOUR_PAUSE_EXPERIENCE,
     payload: payload
   };
 }

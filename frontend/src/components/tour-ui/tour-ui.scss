@@ -1,0 +1,15 @@
+.tour-ui{
+  z-index: 10;
+}
+.tour-ui--buttons{
+  width: 100%;
+  display: flex;
+  align-content: center;
+  justify-content: space-between;
+}
+.tour-ui--btn {
+  img{
+    width:40px;
+    height:40px;
+  }
+}

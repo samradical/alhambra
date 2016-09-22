@@ -45,6 +45,21 @@ class Bodymovin extends Component {
 
     this.setState({ 'orientation': nextProps.resize.orientation })
 
+    if (!nextProps.tour.dominantPlaying) {
+      this._hideShort()
+    }
+  }
+
+  _hideShort(){
+    if(this.refs.bodymovinShort){
+      this.refs.bodymovinShort.classList.add('is-hidden')
+    }
+  }
+
+  _hideLong(){
+    if(this.refs.bodymovinLong){
+      this.refs.bodymovinLong.classList.add('is-hidden')
+    }
   }
 
   _playShort() {
@@ -52,7 +67,7 @@ class Bodymovin extends Component {
       return
     }
     this._isPlayingLong = false
-    this.refs.bodymovinLong.classList.add('is-hidden')
+    this._hideLong()
     this.refs.bodymovinShort.classList.remove('is-hidden')
     if (this._bodyAnimShort) {
       this._bodyAnimShort.goToAndPlay(0, false)
@@ -64,7 +79,7 @@ class Bodymovin extends Component {
       return
     }
     this._isPlayingLong = true
-    this.refs.bodymovinShort.classList.add('is-hidden')
+    this._hideShort()
     this.refs.bodymovinLong.classList.remove('is-hidden')
     if (this._bodyAnimLong) {
       this._bodyAnimLong.goToAndPlay(0, false)

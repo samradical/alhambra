@@ -1,0 +1,29 @@
+.tour-map{
+  display: none;
+  &.is-visible{
+    display: flex;
+  }
+
+  justify-content: center;
+  align-content: center;
+
+
+  img{
+    width: 100%;
+    height:auto;
+  }
+}
+
+.map-info{
+  position: absolute;
+  left:300px;
+  top:200px;
+}
+
+.tour-map-user{
+  position: absolute;
+  background-color:blue;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+}

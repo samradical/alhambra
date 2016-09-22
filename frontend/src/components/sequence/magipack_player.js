@@ -101,6 +101,9 @@ const M = (() => {
     }
 
     function resume() {
+        if(!_paused){
+            return
+        }
         if (_paused) {
             _paused = false
         } else {

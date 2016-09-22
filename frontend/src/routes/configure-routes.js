@@ -8,8 +8,7 @@ import TourPage from '../containers/tour-page/tour-page';
 export default function configureRoutes() {
   return (
     <Route path="/" component={App}>
-      <IndexRoute component={HomePage}/>
-      <Route path="tour" component={TourPage}/>
+      <IndexRoute component={TourPage}/>
     </Route>
   );
 }

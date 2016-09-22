@@ -7,6 +7,7 @@ import { speakingPlayback } from '../../actions/tour';
 import { dominantPlayback } from '../../actions/tour';
 import { ambientPlayback } from '../../actions/tour';
 import { nextLocation } from '../../actions/tour';
+import { userCoordsChanged } from '../../actions/tour';
 import { connect } from 'react-redux';
 
 import Dervieur from '@samelie/deriveur';
@@ -34,6 +35,13 @@ const PABLO2 = [
   { id: 'loc1', latitude: 37.849431, longitude: -122.285679, radius: 10 },
   { id: 'loc2', latitude: 37.849189, longitude: -122.285601, radius: 10 },
   { id: 'loc3', latitude: 37.848934, longitude: -122.285523, radius: 10 },
+  /*{ id: 'loc4', latitude: 37.848934, longitude: -122.285235, radius: 10 },*/
+]
+const CCA = [
+  { id: 'loc0', latitude: 37.767496, longitude: -122.399782, radius: 10 },
+  { id: 'loc1', latitude: 37.767321, longitude: -122.399985, radius: 10 },
+  { id: 'loc2', latitude: 37.767164, longitude: -122.399806, radius: 10 },
+  { id: 'loc3', latitude: 37.767187, longitude: -122.399477, radius: 10 },
   /*{ id: 'loc4', latitude: 37.848934, longitude: -122.285235, radius: 10 },*/
 ]
 
@@ -81,8 +89,33 @@ class Deriveur extends Component {
     speakingChanged: PropTypes.func.isRequired,
   };
 
+
+  constructor() {
+    super()
+    this.state = {
+      experiencePaused: false
+    };
+  }
+
   componentDidMount() {
 
+  }
+
+  componentWillUnmount() {
+    //this._devriveur.destroy()
+    //this._devriveur = null
+  }
+
+  componentWillReceiveProps(nextProps) {
+    let _t = nextProps.tour
+    if(this.state.experiencePaused !== _t.experiencePaused) {
+      if (_t.experiencePaused) {
+        this._devriveur.pause()
+      } else {
+        this._devriveur.resume()
+      }
+      this.setState({experiencePaused:_t.experiencePaused})
+    }
   }
 
   _initDeriveur() {
@@ -95,23 +128,23 @@ class Deriveur extends Component {
       ambientPlayback,
       speakingPlayback,
       nextLocation,
+      userCoordsChanged,
     } = this.props;
 
     if (this._devriveur) {
       return
     }
     this._devriveur = new Dervieur(alhambra.toArray(),
-      PABLO2, {
-        noVisualMap: false,
+      CCA, {
+        noVisualMap: true,
         noGeo: false,
-        mapUpdateSpeed:2000,
+        mapUpdateSpeed: 2000,
         filterOnlyAudioFormats: Detector.IS_IOS ? 'mp3' : 'ogg',
         assetsUrl: REMOTE_ASSETS_DIR
       })
     this._devriveur.on('tour:nextlocation', (l) => {
       nextLocation(l)
     })
-    this._devriveur.on('speaking:playing', () => speakingChanged())
     this._devriveur.on('map:entering', (loc, index) => {
       locationChanged({
         location: loc,
@@ -128,6 +161,9 @@ class Deriveur extends Component {
     })
     this._devriveur.on('map:bearing', (bearing) => {
       bearingChanged(bearing)
+    })
+    this._devriveur.on('map:update:user', (coords) => {
+      userCoordsChanged(coords)
     })
     this._devriveur.on('sound:speaking:playing', () => {
       speakingPlayback(true)
@@ -177,4 +213,5 @@ export default connect(({ alhambra, browser, tour }) => ({
   speakingPlayback,
   dominantPlayback,
   ambientPlayback,
+  userCoordsChanged,
 })(Deriveur);

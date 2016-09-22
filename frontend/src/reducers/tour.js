@@ -6,6 +6,9 @@ import {
   TOUR_DOMINANT_PLAYBACK,
   TOUR_AMBIENT_PLAYBACK,
   TOUR_NEXT_LOCATION,
+  TOUR_SHOW_MAP,
+  TOUR_USER_COORDS_CHANGED,
+  TOUR_PAUSE_EXPERIENCE,
 } from '../constants/action-types';
 
 import { Record } from 'immutable';
@@ -18,6 +21,9 @@ const InitialState = Record({
   location: {
     distance: 1
   },
+  experiencePaused:false,
+  userCoords:null,
+  mapVisible: false,
   locationIndex: NaN,
   speakingCounter: 0,
   isIn: false,
@@ -70,6 +76,18 @@ export default function tour(state = initialState, action) {
       case TOUR_NEXT_LOCATION:
       {
         return state.set('nextLocation', action.payload)
+      }
+      case TOUR_SHOW_MAP:
+      {
+        return state.set('mapVisible', action.payload)
+      }
+      case TOUR_USER_COORDS_CHANGED:
+      {
+        return state.set('userCoords', action.payload)
+      }
+      case TOUR_PAUSE_EXPERIENCE:
+      {
+        return state.set('experiencePaused', action.payload)
       }
     default:
       {

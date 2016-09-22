@@ -46,6 +46,9 @@ class LocationCover extends Component {
   }
 
   hide() {
+    if(this._aNewLocation){
+      return
+    }
     clearTimeout(this._to)
     this.refs.locationCover.classList.remove('show')
   }
@@ -85,8 +88,10 @@ class LocationCover extends Component {
           if (isIn) {
             this.show()
           }
+          this._aNewLocation = true
           this.setState({ coverStyle: { backgroundImage: `url(${_url})` } })
           this._to = setTimeout(() => {
+            this._aNewLocation = false
             this.hide()
           }, TIME_ON_LOCATION_COVER)
         })

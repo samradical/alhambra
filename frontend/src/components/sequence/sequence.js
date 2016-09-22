@@ -29,16 +29,13 @@ class Sequence extends Component {
       //MagipackPlayer.hide()
     }
 
-    if (nextProps.tour.isIn) {
+    if (nextProps.tour.speakingPlaying) {
       this.show()
-    } else {
+    }else{
       this.hide()
     }
 
-
-    if (nextProps.tour.speakingPlaying) {
-      this.show()
-    } else {
+    if (!nextProps.tour.isIn) {
       this.hide()
     }
   }
