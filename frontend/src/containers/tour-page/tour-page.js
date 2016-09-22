@@ -34,8 +34,8 @@ class TourPage extends Component {
         <Dervieur/>
         <Bodymovin/>
         <Sequence/>
-        <Compass/>
         <LocationCover/>
+        <Compass/>
       </div>
     );
   }

@@ -20,19 +20,40 @@ class Sequence extends Component {
   componentWillReceiveProps(nextProps) {
     const { browser, sequence, tour } = this.props;
     let _n = nextProps.tour.locationIndex
+
     if (tour.locationIndex !== _n &&
-      !isNaN(_n) &&
-      tour.isIn
+      !isNaN(_n)
     ) {
       this._newLocation(nextProps.tour.locationIndex)
     } else {
       //MagipackPlayer.hide()
     }
 
-    if (nextProps.tour.speakingPlaying) {
-      MagipackPlayer.play()
+    if (nextProps.tour.isIn) {
+      this.show()
     } else {
-      MagipackPlayer.pauseAndHide()
+      this.hide()
+    }
+
+
+    if (nextProps.tour.speakingPlaying) {
+      this.show()
+    } else {
+      this.hide()
+    }
+  }
+
+  hide() {
+    if (this.refs.magiSrc) {
+      MagipackPlayer.pause()
+      this.refs.magiSrc.classList.remove('is-visible')
+    }
+  }
+
+  show() {
+    if (this.refs.magiSrc) {
+      MagipackPlayer.resume()
+      this.refs.magiSrc.classList.add('is-visible')
     }
   }
 
@@ -40,8 +61,6 @@ class Sequence extends Component {
     const { sequence } = this.props;
     let _l = sequence.toArray()
     let _o = _.assign({}, _l[index])
-    console.log(_.clone(_o));
-    console.log(this.refs.magiSrc);
     MagipackPlayer.loadAndPlay(_o, this.refs.magiSrc)
   }
 

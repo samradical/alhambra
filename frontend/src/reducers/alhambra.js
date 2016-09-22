@@ -61,7 +61,8 @@ function _findFilesRecursive(location, layerId) {
         }
         return child
       } else if(child.name !== '.DS_Store'){
-        let url = process.env.REMOTE_ASSETS_DIR + 'tour/' + location.name + '/' + child.path.substring(child.path.indexOf(layerId), child.path.length)
+        let url = child.path.replace('../www-assets/', process.env.REMOTE_ASSETS_DIR)
+        //let url = process.env.REMOTE_ASSETS_DIR + 'tour/' + location.name + '/' + child.path.substring(child.path.indexOf(layerId), child.path.length)
         child.url = url
         _files.push(child)
         return child

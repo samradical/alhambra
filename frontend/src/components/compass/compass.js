@@ -14,57 +14,69 @@ class Compass extends Component {
   static propTypes = {
     browser: PropTypes.object.isRequired,
     tour: PropTypes.object.isRequired,
+    resize: PropTypes.object.isRequired,
   };
 
   constructor() {
     super()
     this.state = {
       bearing: 0,
+      orientation: 0
     };
   }
 
   componentDidMount() {
     let _self = this
     setTimeout(() => {
-      window.Compass.init((method) => {
-        console.log('window.Compass heading by ' + method);
-      });
+        window.Compass.init((method) => {
+          console.log('window.Compass heading by ' + method);
+        });
 
-      window.Compass.watch((heading) => {
-        if (heading > 180) {
-          heading -= 360;
-        }
-        if (heading < -180) {
-          heading += 360;
-        }
-        _self._compassRotation = heading + _self.state.bearing
-        _self.rotateCompass(_self._compassRotation)
-      });
+        window.Compass.watch((heading) => {
+          if (heading > 180) {
+            heading -= 360;
+          }
+          if (heading < -180) {
+            heading += 360;
+          }
+          _self._compassRotation = heading + _self.state.bearing +
+            +_self.state.orientation
+          _self.rotateCompass(_self._compassRotation)
+        });
 
-      window.Compass.noSupport(() => {
-        console.error("NO COMP");
-      });
-    }, 2000)
-    //this.hideCompass()
+        window.Compass.noSupport(() => {
+          console.error("NO COMP");
+        });
+      }, 2000)
+      //this.hideCompass()
   }
 
   componentWillReceiveProps(nextProps) {
     this.setState({ 'bearing': nextProps.tour.bearing })
-    if(nextProps.tour.state === 'out'){
+    this.setState({ 'orientation': nextProps.resize.orientation })
+    if (nextProps.tour.state === 'out') {
       this.showCompass()
-    }else{
+    } else {
       this.hideCompass()
     }
   }
 
   render() {
-    const { browser, tour } = this.props;
+    const { browser, tour, resize } = this.props;
+    console.log("*************************************");
+    console.log(tour.nextLocation);
+    console.log("*************************************");
+    if (!tour.nextLocation) {
+      return (<div ref="view" className="o-page compass"></div>)
+    }
     return (
       <div ref="view" className="o-page compass">
         <div className="compass-ui">
           <img ref="compassArrow" src={`${IMAGE_DIR}compass_arrow.svg`}></img>
-          <div className="compass-title">next location:{tour.location.id}</div>
-          <div className="compass-distance">{tour.location.distance} meters away</div>
+          <div className="compass-title">next location:{tour.nextLocation.id}</div>
+          <div className="compass-distance">{tour.nextLocation.distance} meters away</div>
+          <div className="compass-distance">{tour.bearing}</div>
+          <div className="compass-distance">{resize.orientation}</div>
         </div>
       </div>
     );
@@ -91,7 +103,8 @@ class Compass extends Component {
   }
 }
 
-export default connect(({ browser, tour }) => ({
+export default connect(({ browser, tour, resize }) => ({
   browser,
   tour,
+  resize,
 }), {})(Compass);

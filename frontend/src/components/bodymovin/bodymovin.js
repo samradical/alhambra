@@ -4,6 +4,8 @@ import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
 
+import _ from 'lodash';
+
 import {
   ASSETS_DIR,
   REMOTE_ASSETS_DIR,
@@ -16,6 +18,7 @@ class Bodymovin extends Component {
     this.state = {
       speakingPlaying: 0,
       dominantPlaying: 0,
+      orientation: -1
     };
   }
 
@@ -29,6 +32,19 @@ class Bodymovin extends Component {
     } else if (nextProps.tour.speakingPlaying) {
       this._playLong()
     }
+
+    if (nextProps.tour.isIn) {
+      if (nextProps.resize.orientation !== this.state.orientation) {
+        this._shortAnimation(nextProps.tour.location.id, { autoplay: true })
+        this._longAnimation(nextProps.tour.location.id, { autoplay: true })
+      }
+    } else if (nextProps.tour.nextLocation) {
+      this._shortAnimation(nextProps.tour.nextLocation.id, { autoplay: true })
+      this._longAnimation(nextProps.tour.nextLocation.id, { autoplay: true })
+    }
+
+    this.setState({ 'orientation': nextProps.resize.orientation })
+
   }
 
   _playShort() {
@@ -58,44 +74,61 @@ class Bodymovin extends Component {
   _newLocationAnimation() {
     const { tour } = this.props;
     const { bodymovin } = this.props;
-    const BM = window.bodymovin
+
     if (!isNaN(tour.locationIndex) &&
       this._locationIndex !== tour.locationIndex) {
-      var animData = {
-        wrapper: this.refs.bodymovinShort,
-        renderer: 'canvas',
-        animType: 'canvas',
-        loop: true,
-        prerender: true,
-        autoplay: false,
-        path: `${REMOTE_ASSETS_DIR}bodymovin/loc${tour.locationIndex}/visuals/color_short/data.json`,
-        rendererSettings: {}
-      };
-      if (this._bodyAnimShort) {
-        this._bodyAnimShort.destroy()
-        this._bodyAnimShort = null
-      }
-      this._bodyAnimShort = BM.loadAnimation(animData);
 
-
-      var animData = {
-        wrapper: this.refs.bodymovinLong,
-        renderer: 'canvas',
-        animType: 'canvas',
-        loop: true,
-        prerender: true,
-        autoplay: false,
-        path: `${REMOTE_ASSETS_DIR}bodymovin/loc${tour.locationIndex}/visuals/color_long/data.json`,
-        rendererSettings: {}
-      };
-      if (this._bodyAnimLong) {
-        this._bodyAnimLong.destroy()
-        this._bodyAnimLong = null
-      }
-      this._bodyAnimLong = BM.loadAnimation(animData);
+      this._shortAnimation(tour.location.id)
+      this._longAnimation(tour.location.id)
 
     }
     this._locationIndex = tour.locationIndex
+  }
+
+  _destroyShort() {
+    if (this._bodyAnimShort) {
+      this._bodyAnimShort.destroy()
+      this._bodyAnimShort = null
+    }
+  }
+
+  _shortAnimation(locationId, options = {}) {
+    const BM = window.bodymovin
+    var animData = {
+      wrapper: this.refs.bodymovinShort,
+      renderer: 'canvas',
+      animType: 'canvas',
+      loop: true,
+      prerender: true,
+      autoplay: false,
+      path: `${REMOTE_ASSETS_DIR}bodymovin/${locationId}/visuals/color_long/data.json`,
+      rendererSettings: {
+        scaleMode: 'noScale',
+      }
+    };
+    this._destroyShort()
+    this._bodyAnimShort = BM.loadAnimation(_.assign({}, animData, options));
+  }
+
+  _longAnimation(locationId, options = {}) {
+    const BM = window.bodymovin
+    var animData = {
+      wrapper: this.refs.bodymovinLong,
+      renderer: 'canvas',
+      animType: 'canvas',
+      loop: true,
+      prerender: true,
+      autoplay: false,
+      path: `${REMOTE_ASSETS_DIR}bodymovin/${locationId}/visuals/color_short/data.json`,
+      rendererSettings: {
+        scaleMode: 'scale',
+      }
+    };
+    if (this._bodyAnimLong) {
+      this._bodyAnimLong.destroy()
+      this._bodyAnimLong = null
+    }
+    this._bodyAnimLong = BM.loadAnimation(_.assign({}, animData, options));
   }
 
   render() {
@@ -106,7 +139,7 @@ class Bodymovin extends Component {
       );
     }
 
-    this._newLocationAnimation()
+    //this._newLocationAnimation()
       //this._onNewSpeaking()
 
     return (
@@ -118,8 +151,9 @@ class Bodymovin extends Component {
   }
 }
 
-export default connect(({ bodymovin, browser, tour }) => ({
+export default connect(({ bodymovin, browser, resize, tour }) => ({
   bodymovin,
   browser,
+  resize,
   tour,
 }), {})(Bodymovin);

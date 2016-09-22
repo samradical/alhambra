@@ -13,13 +13,13 @@ import Loader from 'assets-loader'
 
 class LocationCover extends Component {
 
-  constructor(){
+  constructor() {
     super()
     this.state = {}
   }
 
   componentDidMount() {
-    this.setState({coverStyle:{backgroundImage:`url()`}})
+    this.setState({ coverStyle: { backgroundImage: `url()` } })
   }
 
   componentWillReceiveProps(nextProps) {
@@ -27,9 +27,21 @@ class LocationCover extends Component {
     let _n = nextProps.tour.locationIndex
     if (tour.locationIndex !== _n &&
       !isNaN(_n) &&
-      tour.isIn
+      nextProps.tour.isIn
     ) {
-      this._newLocation(nextProps.tour.locationIndex)
+      this._newLocation(nextProps.tour.locationIndex, nextProps.tour.isIn)
+    }
+
+    if (nextProps.tour.ambientPlaying) {
+      this.show()
+    } else {
+      this.hide()
+    }
+
+    if (!nextProps.tour.isIn) {
+      if (nextProps.tour.nextLocation) {
+        this._setStateAndImage(nextProps.tour.nextLocation.id)
+      }
     }
   }
 
@@ -62,33 +74,39 @@ class LocationCover extends Component {
   }
 
 
-  _newLocation(index) {
+  _newLocation(index, isIn) {
     const { browser, tour } = this.props;
-    if (tour.state === 'in') {
-      if (!isNaN(index)) {
-
-        clearTimeout(this._to)
-        let _url = `${IMAGE_DIR}tour/loc${index}/cover.jpg`
-        this._preload(
-          _url,
-          () => {
+    if (!isNaN(index)) {
+      clearTimeout(this._to)
+      let _url = `${IMAGE_DIR}tour/loc${index}/cover.jpg`
+      this._preload(
+        _url,
+        () => {
+          if (isIn) {
             this.show()
-            this.setState({coverStyle:{backgroundImage:`url(${_url})`}})
-            this._to = setTimeout(() => {
-              this.hide()
-            }, TIME_ON_LOCATION_COVER)
-          })
-      }
-    } else {
-      this.refs.locationCover.style.backgroundImage = null
+          }
+          this.setState({ coverStyle: { backgroundImage: `url(${_url})` } })
+          this._to = setTimeout(() => {
+            this.hide()
+          }, TIME_ON_LOCATION_COVER)
+        })
     }
   }
 
+  _setStateAndImage(locationId) {
+    let _url = `${IMAGE_DIR}tour/${locationId}/cover.jpg`
+    console.log(_url);
+    this.setState({ coverStyle: { backgroundImage: `url(${_url})` } })
+    this.show()
+  }
+
+
   render() {
     const { browser, tour } = this.props;
-    return (
-      <div ref="locationCover" style={this.state.coverStyle}className="o-page location-cover">
-      </div>
+    return ( < div ref = "locationCover"
+      style = { this.state.coverStyle }
+      className = "o-page location-cover" >
+      < /div>
     );
   }
 }

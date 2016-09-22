@@ -4,6 +4,8 @@ import {
   TOUR_BEARING_CHANGED,
   TOUR_SPEAKING_PLAYBACK,
   TOUR_DOMINANT_PLAYBACK,
+  TOUR_AMBIENT_PLAYBACK,
+  TOUR_NEXT_LOCATION,
 } from '../constants/action-types';
 
 export function locationChanged(payload = {}) {
@@ -44,6 +46,18 @@ export function speakingPlayback(payload = {}) {
 export function dominantPlayback(payload = {}) {
   return {
     type: TOUR_DOMINANT_PLAYBACK,
+    payload: payload
+  };
+}
+export function ambientPlayback(payload = {}) {
+  return {
+    type: TOUR_AMBIENT_PLAYBACK,
+    payload: payload
+  };
+}
+export function nextLocation(payload = {}) {
+  return {
+    type: TOUR_NEXT_LOCATION,
     payload: payload
   };
 }

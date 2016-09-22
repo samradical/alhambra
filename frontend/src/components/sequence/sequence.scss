@@ -3,8 +3,10 @@
   align-items: center;
   justify-content: center;
   img{
-    &.is-hidden{
-      display: none;
+    max-width: 100%;
+    display: none;
+    &.is-visible{
+      display: inline-block;
     }
   }
 }

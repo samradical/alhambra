@@ -9,6 +9,7 @@ import { syncHistoryWithStore } from 'react-router-redux';
 
 import {
   RESIZE,
+  ORIENTATION_CHANGE,
 } from './constants/action-types';
 
 import configureStore from './store/configure-store';
@@ -35,6 +36,13 @@ window.addEventListener('reszie', ()=>{
     payload:{width:window.innerWidth, height:window.innerHeight}
   })
 })
+
+window.addEventListener("orientationchange",  () =>{
+  store.dispatch({
+    type:ORIENTATION_CHANGE,
+    payload:window.orientation
+  })
+});
 
 ReactDom.render(
   <Provider store={store}>

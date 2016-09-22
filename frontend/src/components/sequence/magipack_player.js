@@ -88,26 +88,16 @@ const M = (() => {
     function _stop() {}
 
     function play() {
-        _show()
         _paused = false
         _counter = 0
     }
 
-    function hide() {
-        if (_el) {
-            _el.classList.add('is-hidden')
-        }
-    }
-
-    function _show() {
-        if (_el) {
-            _el.classList.remove('is-hidden')
-        }
+    function pause() {
+        _paused = true
     }
 
     function pauseAndHide() {
         _paused = true
-        hide()
     }
 
     function resume() {
@@ -137,16 +127,10 @@ const M = (() => {
         return _load(obj).then(loader => {
             _loader = loader
             let imageFile = loader.get('images')
-            console.log("_---------_____________");
-            console.log("Loaded");
-            console.log(loader.get('pack'));
-            console.log(imageFile);
-            console.log("_---------_____________");
             _magipack = new Magipack(loader.get('pack'), imageFile);
             _fileNames = imageFile.map(arr => {
                 return arr[0]
             })
-            console.log(_fileNames);
             _loading = false
             return _loader
         })
@@ -155,8 +139,9 @@ const M = (() => {
     _update()
 
     return {
+        pause,
+        resume,
         play,
-        hide,
         pauseAndHide,
         load,
         loadAndPlay,

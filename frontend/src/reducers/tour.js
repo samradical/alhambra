@@ -4,6 +4,8 @@ import {
   TOUR_SPEAKING_CHANGED,
   TOUR_SPEAKING_PLAYBACK,
   TOUR_DOMINANT_PLAYBACK,
+  TOUR_AMBIENT_PLAYBACK,
+  TOUR_NEXT_LOCATION,
 } from '../constants/action-types';
 
 import { Record } from 'immutable';
@@ -23,6 +25,8 @@ const InitialState = Record({
   bearing: 0,
   speakingPlaying: false,
   dominantPlaying: false,
+  ambientPlaying: false,
+  nextLocation: null,
 });
 
 const initialState = new InitialState;
@@ -58,6 +62,14 @@ export default function tour(state = initialState, action) {
     case TOUR_DOMINANT_PLAYBACK:
       {
         return state.set('dominantPlaying', action.payload)
+      }
+      case TOUR_AMBIENT_PLAYBACK:
+      {
+        return state.set('ambientPlaying', action.payload)
+      }
+      case TOUR_NEXT_LOCATION:
+      {
+        return state.set('nextLocation', action.payload)
       }
     default:
       {

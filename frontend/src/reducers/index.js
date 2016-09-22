@@ -6,6 +6,7 @@ import alhambra from './alhambra';
 import bodymovin from './bodymovin';
 import sequence from './sequence';
 import tour from './tour';
+import resize from './resize';
 /*import terms from './terms';
 import ui from './ui';
 import projects from './projects';
@@ -19,6 +20,7 @@ export default combineReducers({
   alhambra,
   bodymovin,
   sequence,
+  resize,
   browser: createResponsiveStateReducer({
     mobile: 360,
     phablet: 540,

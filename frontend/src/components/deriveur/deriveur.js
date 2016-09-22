@@ -5,6 +5,8 @@ import { speakingChanged } from '../../actions/tour';
 import { bearingChanged } from '../../actions/tour';
 import { speakingPlayback } from '../../actions/tour';
 import { dominantPlayback } from '../../actions/tour';
+import { ambientPlayback } from '../../actions/tour';
+import { nextLocation } from '../../actions/tour';
 import { connect } from 'react-redux';
 
 import Dervieur from '@samelie/deriveur';
@@ -25,6 +27,14 @@ const PABLO = [
   { id: 'loc2', latitude: 37.847735, longitude: -122.286633, radius: 60 },
   { id: 'loc3', latitude: 37.847527, longitude: -122.288117, radius: 40 },
   { id: 'loc4', latitude: 37.847607, longitude: -122.288485, radius: 40 },
+]
+
+const PABLO2 = [
+  { id: 'loc0', latitude: 37.849630, longitude: -122.285749, radius: 10 },
+  { id: 'loc1', latitude: 37.849431, longitude: -122.285679, radius: 10 },
+  { id: 'loc2', latitude: 37.849189, longitude: -122.285601, radius: 10 },
+  { id: 'loc3', latitude: 37.848934, longitude: -122.285523, radius: 10 },
+  /*{ id: 'loc4', latitude: 37.848934, longitude: -122.285235, radius: 10 },*/
 ]
 
 /*const CARA = [
@@ -82,18 +92,25 @@ class Deriveur extends Component {
       locationChanged,
       speakingChanged,
       dominantPlayback,
-      speakingPlayback
+      ambientPlayback,
+      speakingPlayback,
+      nextLocation,
     } = this.props;
 
     if (this._devriveur) {
       return
     }
     this._devriveur = new Dervieur(alhambra.toArray(),
-      ALHAMBRA, {
+      PABLO2, {
         noVisualMap: false,
-        noGeo: true,
+        noGeo: false,
+        mapUpdateSpeed:2000,
+        filterOnlyAudioFormats: Detector.IS_IOS ? 'mp3' : 'ogg',
         assetsUrl: REMOTE_ASSETS_DIR
       })
+    this._devriveur.on('tour:nextlocation', (l) => {
+      nextLocation(l)
+    })
     this._devriveur.on('speaking:playing', () => speakingChanged())
     this._devriveur.on('map:entering', (loc, index) => {
       locationChanged({
@@ -124,6 +141,12 @@ class Deriveur extends Component {
     this._devriveur.on('sound:dominant:ended', () => {
       dominantPlayback(false)
     })
+    this._devriveur.on('sound:ambient:playing', () => {
+      ambientPlayback(true)
+    })
+    this._devriveur.on('sound:ambient:ended', () => {
+      ambientPlayback(false)
+    })
   }
 
   render() {
@@ -147,9 +170,11 @@ export default connect(({ alhambra, browser, tour }) => ({
   browser,
   tour,
 }), {
+  nextLocation,
   locationChanged,
   bearingChanged,
   speakingChanged,
   speakingPlayback,
   dominantPlayback,
+  ambientPlayback,
 })(Deriveur);
