@@ -27,6 +27,8 @@ class Bodymovin extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    let { tour } = this.props
+    let _n = nextProps.tour.locationIndex
     if (nextProps.tour.dominantPlaying) {
       this._playShort()
     } else if (nextProps.tour.speakingPlaying) {
@@ -37,11 +39,13 @@ class Bodymovin extends Component {
       if (nextProps.resize.orientation !== this.state.orientation) {
         this._shortAnimation(nextProps.tour.location.id, { autoplay: true })
         this._longAnimation(nextProps.tour.location.id, { autoplay: true })
+      } else if (nextProps.tour.nextLocation &&
+        !isNaN(_n) &&
+        tour.locationIndex !== _n
+      ) {
+        this._shortAnimation(nextProps.tour.location.id, { autoplay: true })
+        this._longAnimation(nextProps.tour.location.id, { autoplay: true })
       }
-    } else if (nextProps.tour.nextLocation &&
-      this._location !== nextProps.tour.nextLocation ) {
-      this._shortAnimation(nextProps.tour.nextLocation.id, { autoplay: true })
-      this._longAnimation(nextProps.tour.nextLocation.id, { autoplay: true })
     }
 
     this.setState({ 'orientation': nextProps.resize.orientation })
@@ -49,58 +53,40 @@ class Bodymovin extends Component {
     if (!nextProps.tour.dominantPlaying) {
       this._hideShort()
     }
-
-    this._location = nextProps.tour.nextLocation
   }
 
-  _hideShort(){
-    if(this.refs.bodymovinShort){
+  _hideShort() {
+    if (this.refs.bodymovinShort) {
       this.refs.bodymovinShort.classList.add('is-hidden')
+      if (this._bodyAnimShort) {
+        this._bodyAnimShort.pause()
+      }
     }
   }
 
-  _hideLong(){
-    if(this.refs.bodymovinLong){
+  _hideLong() {
+    if (this.refs.bodymovinLong) {
       this.refs.bodymovinLong.classList.add('is-hidden')
+      if (this._bodyAnimLong) {
+        this._bodyAnimLong.pause()
+      }
     }
   }
 
   _playShort() {
-    if (!this._isPlayingLong) {
-      return
-    }
-    this._isPlayingLong = false
     this._hideLong()
     this.refs.bodymovinShort.classList.remove('is-hidden')
     if (this._bodyAnimShort) {
-      this._bodyAnimShort.goToAndPlay(0, false)
+      this._bodyAnimShort.play()
     }
   }
 
   _playLong() {
-    if (this._isPlayingLong) {
-      return
-    }
-    this._isPlayingLong = true
     this._hideShort()
     this.refs.bodymovinLong.classList.remove('is-hidden')
     if (this._bodyAnimLong) {
-      this._bodyAnimLong.goToAndPlay(0, false)
+      this._bodyAnimLong.play()
     }
-  }
-
-  _newLocationAnimation() {
-    const { tour } = this.props;
-    const { bodymovin } = this.props;
-
-    if (!isNaN(tour.locationIndex) &&
-      this._locationIndex !== tour.locationIndex) {
-
-      this._shortAnimation(tour.location.id)
-      this._longAnimation(tour.location.id)
-
-    }
-    this._locationIndex = tour.locationIndex
   }
 
   _destroyShort() {
@@ -119,7 +105,7 @@ class Bodymovin extends Component {
       loop: true,
       prerender: true,
       autoplay: false,
-      path: `${REMOTE_ASSETS_DIR}bodymovin/${locationId}/visuals/color_long/data.json`,
+      path: `${REMOTE_ASSETS_DIR}bodymovin/${locationId}/visuals/color_short/data.json`,
       rendererSettings: {
         scaleMode: 'noScale',
       }
@@ -137,7 +123,7 @@ class Bodymovin extends Component {
       loop: true,
       prerender: true,
       autoplay: false,
-      path: `${REMOTE_ASSETS_DIR}bodymovin/${locationId}/visuals/color_short/data.json`,
+      path: `${REMOTE_ASSETS_DIR}bodymovin/${locationId}/visuals/color_long/data.json`,
       rendererSettings: {
         scaleMode: 'scale',
       }
@@ -158,7 +144,7 @@ class Bodymovin extends Component {
     }
 
     //this._newLocationAnimation()
-      //this._onNewSpeaking()
+    //this._onNewSpeaking()
 
     return (
       <div>

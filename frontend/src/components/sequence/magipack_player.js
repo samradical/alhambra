@@ -39,6 +39,7 @@ const M = (() => {
         _counter = 0,
         _rId,
         _el,
+        _animationCallback,
         _magipack,
         _fileNames,
         _loading = true,
@@ -79,6 +80,7 @@ const M = (() => {
                 _counter++;
                 if (_counter >= _l) {
                     _counter = 0
+                    _animationCallback()
                 }
             }
         }
@@ -127,6 +129,7 @@ const M = (() => {
         _destroy()
         _paused = true
         _loading = true
+        _el.src = ""
         return _load(obj).then(loader => {
             _loader = loader
             let imageFile = loader.get('images')
@@ -139,6 +142,10 @@ const M = (() => {
         })
     }
 
+    function setAnimationCompleteCallback(cb){
+      _animationCallback = cb
+    }
+
     _update()
 
     return {
@@ -148,6 +155,7 @@ const M = (() => {
         pauseAndHide,
         load,
         loadAndPlay,
+        setAnimationCompleteCallback,
     }
 })()
 

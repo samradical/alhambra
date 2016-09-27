@@ -7,6 +7,7 @@ const argv = require('yargs').argv;
 var readDir = require('readdir');
 
 const UTILS = require('./utils')
+const QUALITY = 7
 
 const FINAL_UPLOAD = '../../www-assets/tour'
 const RAW = argv.rawDir || '_preconverted'
@@ -92,7 +93,9 @@ function convert(dir = CONVERTED_UPLOAD_DIR) {
       let _savePath = PATH.join(_spacelessDir, _wavFile)
       convertedFiles.push(_savePath)
       if (!FS.existsSync(_savePath)) {
-        exec(`ffmpeg -i ${path} ${_savePath}`)
+        let _c = `ffmpeg -i ${path} ${_savePath}`
+        console.log(_c);
+        exec(_c)
       }
     })
   })
@@ -141,7 +144,7 @@ node prepare_upload.js --rawDir "../_liveContent" --deleteWavs --dir "assets"
 */
 function deleteWavs(dir = CONVERTED_SPLIT_DIR) {
   let _splitDir = PATH.join(CONTENT_DIR, dir)
-  var files = readDir.readSync(_splitDir, ['**.wav'], readDir.ABSOLUTE_PATHS);
+  var files = readDir.readSync(_splitDir, ['**.wav', '**.aif', '**.aiff', '**.m4a'], readDir.ABSOLUTE_PATHS);
   files.forEach(path => {
     FS.unlinkSync(path)
   })
@@ -154,7 +157,7 @@ node prepare_upload.js --rawDir "../_liveContent" --convertSplited --dir "assets
 function convertSplited(q, dir = CONVERTED_SPLIT_DIR, withMp3 = false) {
   let _splitDir = PATH.join(CONTENT_DIR, dir)
   console.log(_splitDir);
-  let _formats = ['**.m4a', '**.wav', '**.aiff', '**.aif']
+  let _formats = ['**.m4a', '**.wav', '**.aiff', '**.aif', '**.mp3']
   if (withMp3) {
     _formats.push('**.mp3')
   }
@@ -271,7 +274,7 @@ if (argv.convert) {
 }
 
 if (argv.convertSplited) {
-  convertSplited(argv.q || 7, argv.dir, argv.mp3)
+  convertSplited(argv.q || QUALITY, argv.dir, argv.mp3)
 }
 
 if (argv.split) {

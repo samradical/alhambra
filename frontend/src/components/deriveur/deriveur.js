@@ -69,7 +69,20 @@ const ALHAMBRA = [
   { id: 'loc0', latitude: 37.7987, longitude: -122.42243, radius: 30 },
   { id: 'loc1', latitude: 37.79831, longitude: -122.42219, radius: 10 },
   { id: 'loc2', latitude: 37.79812, longitude: -122.42214, radius: 15 },
-  { id: 'loc3', latitude: 37.79785, longitude: -122.42185, radius: 16 },
+  { id: 'loc3', latitude: 37.7978, longitude: -122.42186, radius: 16 },
+  { id: 'loc4', latitude: 37.79795,longitude: -122.42186, radius: 16 },
+  { id: 'loc5', latitude: 37.79793,longitude: -122.42119, radius: 16 },
+  { id: 'loc6', latitude: 37.79802,longitude: -122.42056, radius: 16 },
+  { id: 'loc7', latitude: 37.79815,longitude: -122.42043, radius: 16 },
+  { id: 'loc8', latitude: 37.79819,longitude: -122.42002, radius: 16 },
+  { id: 'loc9', latitude: 37.79807,longitude: -122.41954, radius: 16 },
+  { id: 'loc10', latitude: 37.7983,longitude: -122.41925, radius: 16 },
+  { id: 'loc11', latitude: 37.79854,longitude: -122.41918, radius: 16 },
+  { id: 'loc12', latitude: 37.7989,longitude: -122.41911, radius: 16 },
+  { id: 'loc13', latitude: 37.79906,longitude: -122.41923, radius: 16 },
+  { id: 'loc14', latitude: 37.79761,longitude: -122.41869, radius: 16 },
+  { id: 'loc15', latitude: 37.79765,longitude: -122.41905, radius: 16 },
+  { id: 'loc16', latitude: 37.79811,longitude: -122.41894, radius: 16 },
 ]
 const HOME_AREA_WALK = [
   { id: 'loc0', latitude: 51.584364, longitude: -0.105178, radius: 30 },
@@ -141,7 +154,7 @@ class Deriveur extends Component {
       return
     }
     this._devriveur = new Dervieur(alhambra.toArray(),
-      BAY_BRIDGE, {
+      ALHAMBRA, {
         noVisualMap: false,
         noGeo: true,
         mapUpdateSpeed: 2000,

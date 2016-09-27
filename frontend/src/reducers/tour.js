@@ -9,6 +9,7 @@ import {
   TOUR_SHOW_MAP,
   TOUR_USER_COORDS_CHANGED,
   TOUR_PAUSE_EXPERIENCE,
+  TOUR_SHOW_LOCATION_COVER,
 } from '../constants/action-types';
 
 import { Record } from 'immutable';
@@ -29,6 +30,7 @@ const InitialState = Record({
   isIn: false,
   state: 'out',
   bearing: 0,
+  showLocationCover: false,
   speakingPlaying: false,
   dominantPlaying: false,
   ambientPlaying: false,
@@ -88,6 +90,10 @@ export default function tour(state = initialState, action) {
       case TOUR_PAUSE_EXPERIENCE:
       {
         return state.set('experiencePaused', action.payload)
+      }
+      case TOUR_SHOW_LOCATION_COVER:
+      {
+        return state.set('showLocationCover', action.payload)
       }
     default:
       {

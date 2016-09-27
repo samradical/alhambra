@@ -8,7 +8,9 @@ import {
 import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
 import _ from 'lodash';
+import { showLocationCover } from '../../actions/tour';
 import { connect } from 'react-redux';
+
 import Loader from 'assets-loader'
 
 class LocationCover extends Component {
@@ -23,7 +25,7 @@ class LocationCover extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { browser, tour } = this.props;
+    const { browser, tour, showLocationCover } = this.props;
     let _n = nextProps.tour.locationIndex
     if (tour.locationIndex !== _n &&
       !isNaN(_n) &&
@@ -35,6 +37,21 @@ class LocationCover extends Component {
     if (nextProps.tour.ambientPlaying) {
       this.show()
     } else {
+      this.hide()
+    }
+
+    if(nextProps.tour.showLocationCover){
+      this.show()
+      setTimeout(()=>{
+        showLocationCover(false)
+      }, (Math.random() * 5 + 5) * 1000)
+    }else{
+      this.hide()
+    }
+    console.log("&&&&&&&&&&&&&&&&&&&&&&&&");
+    console.log(nextProps.tour.dominantPlaying);
+    console.log("&&&&&&&&&&&&&&&&&&&&&&&&");
+    if (nextProps.tour.dominantPlaying) {
       this.hide()
     }
 
@@ -51,10 +68,10 @@ class LocationCover extends Component {
     }
     clearTimeout(this._to)
     this.refs.locationCover.classList.remove('show')
+
   }
 
   show() {
-    clearTimeout(this._to)
     this.refs.locationCover.classList.add('show')
   }
 
@@ -100,7 +117,6 @@ class LocationCover extends Component {
 
   _setStateAndImage(locationId) {
     let _url = `${IMAGE_DIR}tour/${locationId}/cover.jpg`
-    console.log(_url);
     this.setState({ coverStyle: { backgroundImage: `url(${_url})` } })
     this.show()
   }
@@ -108,10 +124,9 @@ class LocationCover extends Component {
 
   render() {
     const { browser, tour } = this.props;
-    return ( < div ref = "locationCover"
-      style = { this.state.coverStyle }
-      className = "o-page location-cover" >
-      < /div>
+    return (<div ref = "locationCover" style = { this.state.coverStyle }
+      className = "o-page location-cover">
+      </div>
     );
   }
 }
@@ -119,4 +134,6 @@ class LocationCover extends Component {
 export default connect(({ browser, tour }) => ({
   browser,
   tour,
-}), {})(LocationCover);
+}), {
+  showLocationCover
+})(LocationCover);

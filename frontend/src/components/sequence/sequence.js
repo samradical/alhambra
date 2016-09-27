@@ -4,7 +4,7 @@ import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
 import _ from 'lodash';
 import { connect } from 'react-redux';
-
+import { showLocationCover } from '../../actions/tour';
 import MagipackPlayer from './magipack_player'
 
 import {
@@ -14,7 +14,10 @@ import {
 class Sequence extends Component {
 
   componentDidMount() {
-    const { browser, sequence, tour } = this.props;
+    const { browser, sequence, tour,showLocationCover } = this.props;
+    MagipackPlayer.setAnimationCompleteCallback(()=>{
+      showLocationCover(true)
+    })
   }
 
   componentWillReceiveProps(nextProps) {
@@ -29,11 +32,16 @@ class Sequence extends Component {
       //MagipackPlayer.hide()
     }
 
+    if(nextProps.tour.showLocationCover){
+      this.hide()
+    }
+
     if (nextProps.tour.speakingPlaying) {
       this.show()
     }else{
       this.hide()
     }
+
 
     if (!nextProps.tour.isIn) {
       this.hide()
@@ -82,4 +90,6 @@ export default connect(({ sequence, browser, tour }) => ({
   sequence,
   browser,
   tour,
-}), {})(Sequence);
+}), {
+  showLocationCover
+})(Sequence);

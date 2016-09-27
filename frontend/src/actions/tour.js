@@ -9,6 +9,7 @@ import {
   TOUR_SHOW_MAP,
   TOUR_USER_COORDS_CHANGED,
   TOUR_PAUSE_EXPERIENCE,
+  TOUR_SHOW_LOCATION_COVER,
 } from '../constants/action-types';
 
 export function locationChanged(payload = {}) {
@@ -80,6 +81,13 @@ export function userCoordsChanged(payload = {}) {
 export function experiencePaused(payload = {}) {
   return {
     type: TOUR_PAUSE_EXPERIENCE,
+    payload: payload
+  };
+}
+
+export function showLocationCover(payload = {}) {
+  return {
+    type: TOUR_SHOW_LOCATION_COVER,
     payload: payload
   };
 }
