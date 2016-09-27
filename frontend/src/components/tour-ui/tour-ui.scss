@@ -1,5 +1,9 @@
 .tour-ui{
   z-index: 10;
+  box-sizing:border-box;
+  padding-right: 10px;
+  padding-left: 10px;
+  padding-top: 10px;
 }
 .tour-ui--buttons{
   width: 100%;

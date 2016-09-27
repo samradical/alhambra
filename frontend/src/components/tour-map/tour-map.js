@@ -127,8 +127,12 @@ class TourMap extends Component {
       className = "o-page tour-map"
       ref="tourMap"
       >
-        <img src={`${IMAGE_DIR}map.svg`}></img>
-        <span className="tour-map-user" style={this.state.userStyle}></span>
+        <div className="tour-map-wrapper">
+          <img src={`${IMAGE_DIR}map.svg`}>
+          </img>
+          <span className="tour-map-user" style={this.state.userStyle}></span>
+        </div>
+
 
       </div>);
     /*

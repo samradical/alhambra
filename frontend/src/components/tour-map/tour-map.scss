@@ -5,13 +5,19 @@
   }
 
   justify-content: center;
+  align-items:center;
   align-content: center;
+  background-color:#B2B2B2;
 
 
   img{
     width: 100%;
     height:auto;
   }
+}
+
+.tour-map-wrapper{
+    position:relative;
 }
 
 .map-info{
