@@ -38,7 +38,8 @@ class Bodymovin extends Component {
         this._shortAnimation(nextProps.tour.location.id, { autoplay: true })
         this._longAnimation(nextProps.tour.location.id, { autoplay: true })
       }
-    } else if (nextProps.tour.nextLocation) {
+    } else if (nextProps.tour.nextLocation &&
+      this._location !== nextProps.tour.nextLocation ) {
       this._shortAnimation(nextProps.tour.nextLocation.id, { autoplay: true })
       this._longAnimation(nextProps.tour.nextLocation.id, { autoplay: true })
     }
@@ -48,6 +49,8 @@ class Bodymovin extends Component {
     if (!nextProps.tour.dominantPlaying) {
       this._hideShort()
     }
+
+    this._location = nextProps.tour.nextLocation
   }
 
   _hideShort(){

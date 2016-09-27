@@ -21,6 +21,12 @@ const CSS_LOADERS = {
   scss: '!sass-loader'
 };
 
+const ENV_VARS = {
+  APP_DOMAIN: '"/tour"',
+  ASSETS_DIR: '"https://storage.googleapis.com/samrad-alhambra/www-assets/"',
+  REMOTE_ASSETS_DIR: '"https://storage.googleapis.com/samrad-alhambra/www-assets/"'
+}
+
 
 module.exports = env => {
   const isDev = !!env.dev
@@ -36,8 +42,8 @@ module.exports = env => {
   const removeEmpty = array => array.filter(i => !!i)
 
   const stylesLoaders = () => {
-    return Object.keys(CSS_LOADERS).map(ext => {
-      const prefix = 'css-loader!postcss-loader';
+    let _l = Object.keys(CSS_LOADERS).map(ext => {
+      const prefix = 'css-loader?-minimize!postcss-loader';
       const extLoaders = prefix + CSS_LOADERS[ext];
       const loader = isDev ? `style-loader!${extLoaders}` : ExtractTextPlugin.extract('style-loader', extLoaders);
       return {
@@ -45,6 +51,8 @@ module.exports = env => {
         test: new RegExp(`\\.(${ext})$`),
       };
     });
+    console.log(_l);
+    return _l
   }
 
   return {
@@ -60,7 +68,7 @@ module.exports = env => {
     context: constants.SRC_DIR,
     devtool: env.prod ? 'source-map' : 'eval',
     devServer: {
-      host:'0.0.0.0',
+      host: '0.0.0.0',
       inline: true,
       hot: true,
       stats: {
@@ -89,7 +97,11 @@ module.exports = env => {
         test: /\.js$/,
         loader: 'babel',
         exclude: /node_modules/,
-      }].concat(stylesLoaders()),
+      }/*, {
+        test: /\.scss$/,
+        exclude: /node_modules/,
+        loader: "style-loader!css-loader!postcss-loader?pack=cleaner"
+      }*/].concat(stylesLoaders()),
     },
     sassLoader: {
       includePaths: [
@@ -99,13 +111,7 @@ module.exports = env => {
     },
     plugins: removeEmpty([
       new webpack.DefinePlugin({
-        'process.env': {
-          APP_DOMAIN:'"/"',
-          //APP_DOMAIN: '"/alhambra/test01"',
-          ASSETS_DIR: '"https://storage.googleapis.com/samrad-alhambra/www-assets/"',
-          //ASSETS_DIR : '""',
-          REMOTE_ASSETS_DIR: '"https://storage.googleapis.com/samrad-alhambra/www-assets/"'
-        }
+        'process.env': ENV_VARS
       }),
       new HtmlWebpackPlugin({
         template: './index.html'

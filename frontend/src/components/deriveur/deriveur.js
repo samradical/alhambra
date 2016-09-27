@@ -77,6 +77,12 @@ const HOME_AREA_WALK = [
   { id: 'loc2', latitude: 51.583762, longitude: -0.104612, radius: 30 },
   { id: 'loc3', latitude: 51.584331, longitude: -0.103272, radius: 60 },
 ]
+const BAY_BRIDGE = [
+  { id: 'loc0', latitude: 37.826881, longitude: -122.296759, radius: 1530 },
+  { id: 'loc1', latitude: 37.812367, longitude: -122.362789, radius: 1530 },
+  { id: 'loc2', latitude: 37.787170, longitude: -122.389178, radius: 1530 },
+  { id: 'loc3', latitude: 37.789620, longitude: -122.422250, radius: 1600 },
+]
 
 class Deriveur extends Component {
 
@@ -135,9 +141,9 @@ class Deriveur extends Component {
       return
     }
     this._devriveur = new Dervieur(alhambra.toArray(),
-      CCA, {
-        noVisualMap: true,
-        noGeo: false,
+      BAY_BRIDGE, {
+        noVisualMap: false,
+        noGeo: true,
         mapUpdateSpeed: 2000,
         filterOnlyAudioFormats: Detector.IS_IOS ? 'mp3' : 'ogg',
         assetsUrl: REMOTE_ASSETS_DIR
