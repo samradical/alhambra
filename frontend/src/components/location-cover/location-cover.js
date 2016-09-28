@@ -48,9 +48,6 @@ class LocationCover extends Component {
     }else{
       this.hide()
     }
-    console.log("&&&&&&&&&&&&&&&&&&&&&&&&");
-    console.log(nextProps.tour.dominantPlaying);
-    console.log("&&&&&&&&&&&&&&&&&&&&&&&&");
     if (nextProps.tour.dominantPlaying) {
       this.hide()
     }

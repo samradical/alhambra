@@ -1,3 +1,5 @@
+import dat from 'dat-gui';
+import emitter from '../../utils/emitter';
 import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
 import { locationChanged } from '../../actions/tour';
@@ -70,19 +72,19 @@ const ALHAMBRA = [
   { id: 'loc1', latitude: 37.79831, longitude: -122.42219, radius: 10 },
   { id: 'loc2', latitude: 37.79812, longitude: -122.42214, radius: 15 },
   { id: 'loc3', latitude: 37.7978, longitude: -122.42186, radius: 12 },
-  { id: 'loc4', latitude: 37.79795,longitude: -122.42186, radius: 11 },
-  { id: 'loc5', latitude: 37.79793,longitude: -122.42119, radius: 16 },
-  { id: 'loc6', latitude: 37.79802,longitude: -122.42056, radius: 12 },
-  { id: 'loc7', latitude: 37.79815,longitude: -122.42043, radius: 12 },
-  { id: 'loc8', latitude: 37.79819,longitude: -122.42002, radius: 16 },
-  { id: 'loc9', latitude: 37.79807,longitude: -122.41954, radius: 16 },
-  { id: 'loc10', latitude: 37.7983,longitude: -122.41925, radius: 16 },
-  { id: 'loc11', latitude: 37.79854,longitude: -122.41918, radius: 16 },
-  { id: 'loc12', latitude: 37.7989,longitude: -122.41911, radius: 13 },
-  { id: 'loc13', latitude: 37.79906,longitude: -122.41923, radius: 12 },
-  { id: 'loc14', latitude: 37.79761,longitude: -122.41869, radius: 16 },
-  { id: 'loc15', latitude: 37.79765,longitude: -122.41905, radius: 16 },
-  { id: 'loc16', latitude: 37.79811,longitude: -122.41894, radius: 16 },
+  { id: 'loc4', latitude: 37.79795, longitude: -122.42186, radius: 11 },
+  { id: 'loc5', latitude: 37.79793, longitude: -122.42119, radius: 16 },
+  { id: 'loc6', latitude: 37.79802, longitude: -122.42056, radius: 12 },
+  { id: 'loc7', latitude: 37.79815, longitude: -122.42043, radius: 12 },
+  { id: 'loc8', latitude: 37.79819, longitude: -122.42002, radius: 16 },
+  { id: 'loc9', latitude: 37.79807, longitude: -122.41954, radius: 16 },
+  { id: 'loc10', latitude: 37.7983, longitude: -122.41925, radius: 16 },
+  { id: 'loc11', latitude: 37.79854, longitude: -122.41918, radius: 16 },
+  { id: 'loc12', latitude: 37.7989, longitude: -122.41911, radius: 13 },
+  { id: 'loc13', latitude: 37.79906, longitude: -122.41923, radius: 12 },
+  { id: 'loc14', latitude: 37.79761, longitude: -122.41869, radius: 16 },
+  { id: 'loc15', latitude: 37.79765, longitude: -122.41905, radius: 16 },
+  { id: 'loc16', latitude: 37.79811, longitude: -122.41894, radius: 16 },
 ]
 const HOME_AREA_WALK = [
   { id: 'loc0', latitude: 51.584364, longitude: -0.105178, radius: 30 },
@@ -117,7 +119,9 @@ class Deriveur extends Component {
   }
 
   componentDidMount() {
-
+    emitter.on('tour:start', () => {
+      this._initDeriveur()
+    })
   }
 
   componentWillUnmount() {
@@ -127,13 +131,13 @@ class Deriveur extends Component {
 
   componentWillReceiveProps(nextProps) {
     let _t = nextProps.tour
-    if(this.state.experiencePaused !== _t.experiencePaused) {
+    if (this.state.experiencePaused !== _t.experiencePaused) {
       if (_t.experiencePaused) {
         this._devriveur.pause()
       } else {
         this._devriveur.resume()
       }
-      this.setState({experiencePaused:_t.experiencePaused})
+      this.setState({ experiencePaused: _t.experiencePaused })
     }
   }
 
@@ -156,7 +160,7 @@ class Deriveur extends Component {
     }
     this._devriveur = new Dervieur(alhambra.toArray(),
       ALHAMBRA, {
-        noVisualMap: false,
+        noVisualMap: true,
         noGeo: false,
         mapUpdateSpeed: 2000,
         filterOnlyAudioFormats: Detector.IS_IOS ? 'mp3' : 'ogg',
@@ -203,6 +207,18 @@ class Deriveur extends Component {
     this._devriveur.on('sound:ambient:ended', () => {
       ambientPlayback(false)
     })
+
+    let O = {
+      activeSounds: () => {
+        let _sounds = this._devriveur.layers.layerSounds
+        console.log(this._devriveur.layers.layerSounds);
+      }
+    }
+
+    let GUI = new dat.GUI()
+    GUI.add(O, 'activeSounds')
+      //GUI.close()
+
   }
 
   render() {
@@ -212,8 +228,6 @@ class Deriveur extends Component {
         <div></div>
       );
     }
-
-    this._initDeriveur()
 
     return (
       <div ref="deriveur" className="deriveur"></div>

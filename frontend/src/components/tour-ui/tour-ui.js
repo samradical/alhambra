@@ -7,6 +7,7 @@ import {
 
 import { showMap } from '../../actions/tour';
 import { experiencePaused } from '../../actions/tour';
+import emitter from '../../utils/emitter';
 
 import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
@@ -53,6 +54,20 @@ class TourUi extends Component {
               showMap(_target)
             }}></img>
           </div>
+        </div>
+        <div ref="instruction"className="instruc-wrapper">
+          <h3>Welcome to the Alhambra walking tour</h3>
+          <p>
+          The experience requires your phone to be awake at all times. Please disable the auto-lock.
+          On iOS: Settings > General > Auto-lock > Never
+          On Android:...
+          </p>
+          <p>Use the compass as your guide around the neighbourhood.</p>
+          <p>If you experience any page reloads, do not be alarmed, just press this button</p>
+          <button ref="startButton" onClick={()=>{
+            this.refs.instruction.classList.add('is-hidden')
+            emitter.emit('tour:start')
+          }}>Start the tour</button>
         </div>
       </div>
     );

@@ -12,10 +12,6 @@ const autoprefixer = require('autoprefixer');
 const postcssEasings = require('postcss-easings');
 
 
-const DefineENV = new webpack.DefinePlugin({
-  'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development')
-})
-
 const CSS_LOADERS = {
   css: '',
   scss: '!sass-loader'
@@ -51,7 +47,6 @@ module.exports = env => {
         test: new RegExp(`\\.(${ext})$`),
       };
     });
-    console.log(_l);
     return _l
   }
 
@@ -81,27 +76,29 @@ module.exports = env => {
     bail: env.prod,
     module: {
       loaders: [{
-        test: /\.svg$/,
-        loader: 'svg-inline'
-      }, {
-        loader: 'url-loader?limit=100000',
-        test: /\.(gif|jpg|png)$/
-      }, {
-        loader: 'url-loader?limit=100000',
-        test: /\.(ttf|eot|woff(2)?)(\?[a-z0-9]+)?$/,
-        include: [`${join(constants.ASSETS_DIR, '/font/')}`]
-      }, {
-        test: /\.json$/,
-        loader: 'json'
-      }, {
-        test: /\.js$/,
-        loader: 'babel',
-        exclude: /node_modules/,
-      }/*, {
-        test: /\.scss$/,
-        exclude: /node_modules/,
-        loader: "style-loader!css-loader!postcss-loader?pack=cleaner"
-      }*/].concat(stylesLoaders()),
+          test: /\.svg$/,
+          loader: 'svg-inline'
+        }, {
+          loader: 'url-loader?limit=100000',
+          test: /\.(gif|jpg|png)$/
+        }, {
+          loader: 'url-loader?limit=100000',
+          test: /\.(ttf|eot|woff(2)?)(\?[a-z0-9]+)?$/,
+          include: [`${join(constants.ASSETS_DIR, '/font/')}`]
+        }, {
+          test: /\.json$/,
+          loader: 'json'
+        }, {
+          test: /\.js$/,
+          loader: 'babel',
+          exclude: /node_modules/,
+        }
+        /*, {
+                test: /\.scss$/,
+                exclude: /node_modules/,
+                loader: "style-loader!css-loader!postcss-loader?pack=cleaner"
+              }*/
+      ].concat(stylesLoaders()),
     },
     sassLoader: {
       includePaths: [
@@ -126,7 +123,9 @@ module.exports = env => {
         quiet: true,
       })),
       // saves 65 kB with Uglify!! Saves 38 kB without
-      DefineENV,
+      new webpack.DefinePlugin({
+        'process.env.NODE_ENV': JSON.stringify(isDev ? 'production' : 'development')
+      }),
       // saves 711 kB!!
       ifProd(new webpack.optimize.UglifyJsPlugin({
         compress: {

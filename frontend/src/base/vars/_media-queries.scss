@@ -17,4 +17,7 @@ $mq-tablet: '(min-width: #{$bp-phablet + 1}) and (max-width: #{$bp-tablet-h})';
 $mq-desktop: '(min-width: #{$bp-desktop})';
 $mq-desktop-l: '(min-width: #{$bp-desktop-l})';
 
+$mq-landscape: '(orientation: landscape)';
+$mq-portrait: '(orientation: portrait)';
+
 // usage example: @media #{$mq-tablet} { ... }

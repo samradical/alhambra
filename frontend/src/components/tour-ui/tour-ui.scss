@@ -4,7 +4,6 @@
   padding-right: 10px;
   padding-left: 10px;
   padding-top: 10px;
-  pointer-events: none;
 }
 .tour-ui--buttons{
   width: 100%;
@@ -16,5 +15,12 @@
   img{
     width:40px;
     height:40px;
+  }
+}
+
+
+.instruc-wrapper{
+  &.is-hidden{
+    display: none;
   }
 }
