@@ -22,7 +22,7 @@ const CSS_LOADERS = {
 };
 
 const ENV_VARS = {
-  APP_DOMAIN: '"/alhambra/al2"',
+  APP_DOMAIN: '"/"',
   ASSETS_DIR: '"https://storage.googleapis.com/samrad-alhambra/www-assets/"',
   REMOTE_ASSETS_DIR: '"https://storage.googleapis.com/samrad-alhambra/www-assets/"'
 }
