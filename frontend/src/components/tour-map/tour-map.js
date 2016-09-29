@@ -14,6 +14,7 @@ import _ from 'lodash';
 import { connect } from 'react-redux';
 import Loader from 'assets-loader'
 import geolib from 'geolib'
+import $ from 'jquery'
 
 const MARKER_SIZE = 5
 const BOUNDS = {
@@ -89,17 +90,21 @@ class TourMap extends Component {
     let _distanceTop = geolib.getDistance(BOUNDS.tl, _top)
     let _distanceLeft = geolib.getDistance(BOUNDS.tl, _left)
 
-    let _w = resize.width
-    let _h = resize.height
+    let _w = $(this.refs.mapImg).width()
+    let _h = $(this.refs.mapImg).height()
 
-    let _pW = Utils.clamp(_distanceLeft / this._distanceTopLeftTopRight, 0, 1) * _w
-    let _pH = Utils.clamp(_distanceTop / this._distanceTopLeftBottomLeft, 0, 1) * _h
+    console.log(_w, _h);
+
+    let _pW = Utils.clamp(_distanceLeft / this._distanceTopLeftTopRight, 0, 1)
+    let _pH = Utils.clamp(_distanceTop / this._distanceTopLeftBottomLeft, 0, 1)
+
+    console.log(_pW, _pH);
 
     let __pW = (resize.orientation === 90) ? _pH : _pW
     let __pH = (resize.orientation === 90) ? _pW : _pH
 
-    _pW = __pW
-    _pH = __pH
+    /*_pW = __pW
+    _pH = __pH*/
 
     _pH -= MARKER_SIZE / 2
     _pW -= MARKER_SIZE / 2
@@ -128,7 +133,7 @@ class TourMap extends Component {
       ref="tourMap"
       >
         <div className="tour-map-wrapper">
-          <img src={`${IMAGE_DIR}map.svg`}>
+          <img ref="mapImg" src={`${IMAGE_DIR}map.svg`}>
           </img>
           <span className="tour-map-user" style={this.state.userStyle}></span>
         </div>

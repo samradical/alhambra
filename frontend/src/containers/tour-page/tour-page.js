@@ -40,7 +40,6 @@ class TourPage extends Component {
         <LocationCover/>
         <Compass/>
         <TourMap/>
-        <TourHome/>
         <TourUi/>
       </div>
     );

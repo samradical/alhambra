@@ -4,6 +4,9 @@
   padding-right: 10px;
   padding-left: 10px;
   padding-top: 10px;
+  &.hide{
+    //pointer-events: none;
+  }
 }
 .tour-ui--buttons{
   width: 100%;

@@ -1,4 +1,3 @@
-import './home-page.scss';
 
 import {
   IMAGE_DIR,
@@ -9,7 +8,7 @@ import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
 
-class HomePage extends Component {
+class CreditsPage extends Component {
 
   static propTypes = {
     browser: PropTypes.object.isRequired
@@ -31,21 +30,17 @@ class HomePage extends Component {
   render() {
     const { browser } = this.props;
     return ( <div
-      className = "o-page u-overlay tour-home"
+      className = "o-page tour-home"
       ref="tourHome"
       >
       <img src={`${IMAGE_DIR}home.svg`}></img>
         <div className="o-page tour-home--menu">
           <span className="home-top">ALHAMBRA</span>
-          <Link key={'credits'} to={`credits`}>
-            <span className="home-right">Credits</span>
-          </Link>
+          <span className="home-right">Credits</span>
           <Link key={'walk'} to={`walk`}>
             <span className="home-bottom">Tour</span>
           </Link>
-          <Link key={'about'} to={`about`}>
-            <span className="home-left">About</span>
-          </Link>
+          <span className="home-left">About</span>
         </div>
       </div>
     );
@@ -55,4 +50,4 @@ class HomePage extends Component {
 
 export default connect(({ browser }) => ({
   browser,
-}))(HomePage);
+}))(CreditsPage);

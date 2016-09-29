@@ -10,6 +10,7 @@ import { Link } from 'react-router';
 import _ from 'lodash';
 import { connect } from 'react-redux';
 import Loader from 'assets-loader'
+import emitter from '../../utils/emitter';
 
 class TourMap extends Component {
 
@@ -41,15 +42,23 @@ class TourMap extends Component {
     } = this.props
 
     return ( <div
-      className = "o-page tour-home"
+      className = "o-page u-overlay tour-home"
       ref="tourHome"
       >
       <img src={`${IMAGE_DIR}home.svg`}></img>
         <div className="o-page">
           <span className="home-top">ALHAMBRA</span>
-          <span className="home-right">Credits</span>
-          <span className="home-bottom">Tour</span>
-          <span className="home-left">About</span>
+          <Link key={'credits'} to={`credits`}>
+            <span className="home-right">Credits</span>
+          </Link>
+          <Link key={'walk'} to={`walk`} onClick={()=>{
+            emitter.emit('tour:home:close')
+          }}>
+            <span className="home-bottom">Tour</span>
+          </Link>
+          <Link key={'about'} to={`about`}>
+            <span className="home-left">About</span>
+          </Link>
         </div>
       </div>
     );

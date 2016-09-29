@@ -8,6 +8,7 @@ import {
 import { showMap } from '../../actions/tour';
 import { experiencePaused } from '../../actions/tour';
 import emitter from '../../utils/emitter';
+import TourHome from '../tour-home/tour-home';
 
 import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
@@ -21,12 +22,80 @@ class TourUi extends Component {
     super()
     this.state = {
       mapVisible:false,
+      homeVisible:false,
       //return home
-      experiencePaused:false
+      experiencePaused:false,
+      showInstruction:true
     }
   }
 
-  componentDidMount() {}
+  componentDidMount() {
+    const {
+      showMap,
+      experiencePaused,
+    } = this.props
+    emitter.on('tour:home:close', ()=>{
+      let _target  = !this.state.experiencePaused
+      this.setState({experiencePaused:_target})
+        experiencePaused(_target)
+    })
+  }
+
+  _renderInstructions(){
+    if(!this.state.showInstruction){
+      return (<div></div>)
+    }
+    return(<div ref="instruction"className="instruc-wrapper">
+            <h3>Welcome to the Alhambra walking tour</h3>
+            <p>
+            The experience requires your phone to be awake at all times. Please disable the auto-lock.
+            On iOS: Settings > General > Auto-lock > Never
+            On Android:...
+            </p>
+            <p>Use the compass as your guide around the neighbourhood.</p>
+            <p>If you experience any page reloads, do not be alarmed, just press this button</p>
+            <button ref="startButton" onClick={()=>{
+              this.refs.tour.classList.add('hide')
+              this.refs.instruction.classList.add('is-hidden')
+              this.setState({showInstruction:false})
+              emitter.emit('tour:start')
+            }}>Start the tour</button>
+   </div>)
+  }
+
+  _renderUi(){
+    const {
+      showMap,
+      experiencePaused,
+    } = this.props
+
+    if(this.state.showInstruction){
+      return (<div></div>)
+    }
+
+    return(<div className="tour-ui--buttons">
+          <div className="tour-ui--btn tour-mapbutton">
+            <img src={`${IMAGE_DIR}home-btn.svg`} onClick={()=>{
+              let _target  = !this.state.experiencePaused
+              this.setState({experiencePaused:_target})
+              experiencePaused(_target)
+            }}></img>
+          </div>
+          <div className="tour-ui--btn tour-mapbutton">
+            <img src={`${IMAGE_DIR}burger-btn.svg`} onClick={()=>{
+              let _target  = !this.state.mapVisible
+              this.setState({mapVisible:_target})
+              showMap(_target)
+            }}></img>
+          </div>
+      </div>)
+  }
+
+  _renderHome(){
+    if(this.state.experiencePaused){
+      return(<TourHome/>)
+    }
+  }
 
   componentWillReceiveProps(nextProps) {}
 
@@ -38,37 +107,11 @@ class TourUi extends Component {
     } = this.props
 
     return ( <div
+      ref="tour"
       className = "o-page tour-ui">
-        <div className="tour-ui--buttons">
-          <Link  key={'/'} to={`/`} className="tour-ui--btn tour-homebutton">
-            <img src={`${IMAGE_DIR}home-btn.svg`} onClick={()=>{
-              let _target  = !this.state.experiencePaused
-              this.setState({experiencePaused:_target})
-              experiencePaused(_target)
-            }}></img>
-          </Link>
-          <div className="tour-ui--btn tour-mapbutton">
-            <img src={`${IMAGE_DIR}burger-btn.svg`} onClick={()=>{
-              let _target  = !this.state.mapVisible
-              this.setState({mapVisible:_target})
-              showMap(_target)
-            }}></img>
-          </div>
-        </div>
-        <div ref="instruction"className="instruc-wrapper">
-          <h3>Welcome to the Alhambra walking tour</h3>
-          <p>
-          The experience requires your phone to be awake at all times. Please disable the auto-lock.
-          On iOS: Settings > General > Auto-lock > Never
-          On Android:...
-          </p>
-          <p>Use the compass as your guide around the neighbourhood.</p>
-          <p>If you experience any page reloads, do not be alarmed, just press this button</p>
-          <button ref="startButton" onClick={()=>{
-            this.refs.instruction.classList.add('is-hidden')
-            emitter.emit('tour:start')
-          }}>Start the tour</button>
-        </div>
+          {this._renderUi()}
+          {this._renderInstructions()}
+          {this._renderHome()}
       </div>
     );
   }

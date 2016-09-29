@@ -160,8 +160,8 @@ class Deriveur extends Component {
     }
     this._devriveur = new Dervieur(alhambra.toArray(),
       ALHAMBRA, {
-        noVisualMap: true,
-        noGeo: false,
+        noVisualMap: false,
+        noGeo: true,
         mapUpdateSpeed: 2000,
         filterOnlyAudioFormats: Detector.IS_IOS ? 'mp3' : 'ogg',
         assetsUrl: REMOTE_ASSETS_DIR
@@ -215,8 +215,8 @@ class Deriveur extends Component {
       }
     }
 
-    let GUI = new dat.GUI()
-    GUI.add(O, 'activeSounds')
+    /*let GUI = new dat.GUI()
+    GUI.add(O, 'activeSounds')*/
       //GUI.close()
 
   }

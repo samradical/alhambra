@@ -66,6 +66,8 @@ class Sequence extends Component {
     const { sequence } = this.props;
     let _l = sequence.toArray()
     let _o = _.assign({}, _l[index])
+    _o.images+=`?z=${Math.random()}`
+    _o.pack+=`?z=${Math.random()}`
     MagipackPlayer.loadAndPlay(_o, this.refs.magiSrc)
   }
 

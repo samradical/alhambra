@@ -9,7 +9,7 @@ export function loadAlhambra() {
   return {
     type: LOAD_ALHAMBRA,
     payload: {
-      promise: fetch(`${JSON_DIR}alhambra_data.json`)
+      promise: fetch(`${JSON_DIR}alhambra_data.json?z=${Math.random()}`)
         .then(response => {
           let _r = response.json()
           return _r;

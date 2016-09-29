@@ -156,7 +156,6 @@ node prepare_upload.js --rawDir "../_liveContent" --convertSplited --dir "assets
 */
 function convertSplited(q, dir = CONVERTED_SPLIT_DIR, withMp3 = false) {
   let _splitDir = PATH.join(CONTENT_DIR, dir)
-  console.log(_splitDir);
   let _formats = ['**.m4a', '**.wav', '**.aiff', '**.aif', '**.mp3']
   if (withMp3) {
     _formats.push('**.mp3')
@@ -172,9 +171,20 @@ function convertSplited(q, dir = CONVERTED_SPLIT_DIR, withMp3 = false) {
   files.forEach(path => {
     let _dir = PATH.parse(path).dir
     let _name = PATH.parse(path).name
-    let _outFile = PATH.join(_dir, _name)
-    exec(`ffmpeg -i ${path} -q:a ${q} -acodec libmp3lame -y ${_outFile}.mp3`)
+    let _base = PATH.parse(path).base
+    let _temp = _name
+    if (PATH.parse(path).ext === '.mp3') {
+      _temp = `${Math.random()}${_name}`
+    }
+    let _outFile = PATH.join(_dir, `${_temp}`)
+    let _c = `ffmpeg -i ${path} -q:a ${q} -acodec libmp3lame -y ${_outFile}.mp3`
+    exec(_c)
     exec(`ffmpeg -i ${path} -q:a ${q} -y ${_outFile}.ogg`)
+    if (PATH.parse(path).ext === '.mp3') {
+      FS.unlinkSync(path)
+      FS.renameSync(`${_outFile}.mp3`, PATH.join(_dir, `${_base}.mp3`))
+      FS.renameSync(`${_outFile}.ogg`, PATH.join(_dir, `${_base}.ogg`))
+    }
   })
 }
 
