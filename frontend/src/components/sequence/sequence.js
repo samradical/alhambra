@@ -32,7 +32,7 @@ class Sequence extends Component {
       //MagipackPlayer.hide()
     }
 
-    if(nextProps.tour.showLocationCover){
+    if(nextProps.tour.showLocationCover || nextProps.tour.dominantPlaying){
       this.hide()
     }
 

@@ -42,11 +42,14 @@ class TourMap extends Component {
     super()
     this.state = {
       positionX: 0,
-      positionY: 0
+      positionY: 0,
     }
   }
 
   componentDidMount() {
+
+    this.setState({ coverStyle: { backgroundImage: `url(${IMAGE_DIR}map.svg)` } })
+
     this._distanceTopLeftBottomLeft = geolib.getDistance(
       BOUNDS.tl,
       BOUNDS.bl,
@@ -71,6 +74,7 @@ class TourMap extends Component {
     }
 
     if (_t.userCoords) {
+      return
       this._calculateDistance(_t.userCoords)
     }
   }
@@ -93,12 +97,12 @@ class TourMap extends Component {
     let _w = $(this.refs.mapImg).width()
     let _h = $(this.refs.mapImg).height()
 
-    console.log(_w, _h);
+    //console.log(_w, _h);
 
     let _pW = Utils.clamp(_distanceLeft / this._distanceTopLeftTopRight, 0, 1)
     let _pH = Utils.clamp(_distanceTop / this._distanceTopLeftBottomLeft, 0, 1)
 
-    console.log(_pW, _pH);
+    //console.log(_pW, _pH);
 
     let __pW = (resize.orientation === 90) ? _pH : _pW
     let __pH = (resize.orientation === 90) ? _pW : _pH
@@ -115,11 +119,11 @@ class TourMap extends Component {
   }
 
   show() {
-    this.refs.tourMap.classList.add('is-visible')
+    this.refs.tourMap.classList.add('show')
   }
 
   hide() {
-    this.refs.tourMap.classList.remove('is-visible')
+    this.refs.tourMap.classList.remove('show')
   }
 
   render() {
@@ -131,14 +135,7 @@ class TourMap extends Component {
     return (<div
       className = "o-page tour-map"
       ref="tourMap"
-      >
-        <div className="tour-map-wrapper">
-          <img ref="mapImg" src={`${IMAGE_DIR}map.svg`}>
-          </img>
-          <span className="tour-map-user" style={this.state.userStyle}></span>
-        </div>
-
-
+      style = { this.state.coverStyle }>
       </div>);
     /*
     <div className="map-info">

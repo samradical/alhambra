@@ -1,4 +1,4 @@
-
+import './credits-page.scss';
 import {
   IMAGE_DIR,
   TIME_ON_LOCATION_COVER,
@@ -15,33 +15,21 @@ class CreditsPage extends Component {
   };
 
   componentDidMount() {
-    this.show()
   }
-
-  show() {
-    this.refs.tourHome.classList.add('is-visible')
-  }
-
-  hide() {
-    this.refs.tourHome.classList.remove('is-visible')
-  }
-
 
   render() {
     const { browser } = this.props;
     return ( <div
-      className = "o-page tour-home"
-      ref="tourHome"
+      className = "o-page credits-page"
       >
-      <img src={`${IMAGE_DIR}home.svg`}></img>
-        <div className="o-page tour-home--menu">
-          <span className="home-top">ALHAMBRA</span>
-          <span className="home-right">Credits</span>
-          <Link key={'walk'} to={`walk`}>
-            <span className="home-bottom">Tour</span>
-          </Link>
-          <span className="home-left">About</span>
-        </div>
+      <Link key={'/'} to={`/`}>
+          <span className="back-btn close-btn">BACK</span>
+      </Link>
+      <div className="credits-wrapper">
+        <h3>App programmed by Sam Elie with visuals by Christoph Steger.</h3>
+        <p>Audio sourced from material.</p>
+        <p>The Alhambra Project by Lynn Marie Kirby and Christoph Steger involving the Russian Hill community. The former Alhambra Theater, now a Crunch gym, becomes the locus for a night of site interventions including video, performative re-enactments of movement from gestures in once-screened Hollywood films, and mobile app-guided neighborhood tours. The Alhambra Project illuminates layered site-specific history, exploring cultural patterning, and visions of exoticism, while interrogating shifting demographics of the neighborhood.</p>
+      </div>
       </div>
     );
   }

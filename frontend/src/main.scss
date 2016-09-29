@@ -18,3 +18,7 @@
 @import 'utilities/u-flex';
 @import 'utilities/u-overlay';
 @import 'utilities/u-grab';
+
+#mapcontainer{
+  z-index: 100;
+}

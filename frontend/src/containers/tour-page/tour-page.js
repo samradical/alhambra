@@ -28,7 +28,9 @@ class TourPage extends Component {
     const { browser, alhambra, bodymovin, tour } = this.props;
     if (!alhambra.size) {
       return (
-        <h1>Loading</h1>
+      <div className="o-page tour-page">
+          <p><i>Loading...</i></p>
+        </div>
       );
     }
 

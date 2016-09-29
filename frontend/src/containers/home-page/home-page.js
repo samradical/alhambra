@@ -36,7 +36,9 @@ class HomePage extends Component {
       >
       <img src={`${IMAGE_DIR}home.svg`}></img>
         <div className="o-page tour-home--menu">
-          <span className="home-top">ALHAMBRA</span>
+          <Link key={'map'} to={`map`}>
+            <span className="home-top">MAP</span>
+          </Link>
           <Link key={'credits'} to={`credits`}>
             <span className="home-right">Credits</span>
           </Link>

@@ -9,7 +9,7 @@ var readDir = require('readdir');
 const UTILS = require('./utils')
 const QUALITY = 7
 
-const FINAL_UPLOAD = '../../www-assets/tour'
+const FINAL_UPLOAD = '../../www-assets'
 const RAW = argv.rawDir || '_preconverted'
 const CONTENT_DIR = PATH.join(__dirname, RAW)
 const SPLIT_MIN = argv.smin || 60

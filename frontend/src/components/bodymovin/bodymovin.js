@@ -52,7 +52,16 @@ class Bodymovin extends Component {
 
     if (!nextProps.tour.dominantPlaying) {
       this._hideShort()
+      if(tour.dominantPlaying !== nextProps.tour.dominantPlaying){
+        this._playLong()
+      }
     }
+
+    if (!nextProps.tour.isIn) {
+      this._hideShort()
+      this._hideLong()
+    }
+
   }
 
   _hideShort() {

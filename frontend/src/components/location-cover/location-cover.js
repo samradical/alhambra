@@ -34,38 +34,36 @@ class LocationCover extends Component {
       this._newLocation(nextProps.tour.locationIndex, nextProps.tour.isIn)
     }
 
-    if (nextProps.tour.ambientPlaying) {
-      this.show()
-    } else {
-      this.hide()
-    }
-
     if(nextProps.tour.showLocationCover){
       this.show()
       setTimeout(()=>{
         showLocationCover(false)
       }, (Math.random() * 5 + 5) * 1000)
-    }else{
+    }else if(!nextProps.tour.showLocationCover){
       this.hide()
     }
-    if (nextProps.tour.dominantPlaying) {
+
+    if (nextProps.tour.isIn && nextProps.tour.dominantPlaying) {
       this.hide()
     }
 
     if (!nextProps.tour.isIn) {
-      if (nextProps.tour.nextLocation) {
+      if (nextProps.tour.nextLocation !== tour.nextLocation) {
         this._setStateAndImage(nextProps.tour.nextLocation.id)
       }
     }
   }
 
   hide() {
+    const { tour } = this.props;
+    if(!tour.isIn){
+      return
+    }
     if(this._aNewLocation){
       return
     }
     clearTimeout(this._to)
     this.refs.locationCover.classList.remove('show')
-
   }
 
   show() {

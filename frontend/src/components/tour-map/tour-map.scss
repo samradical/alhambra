@@ -1,4 +1,15 @@
-.tour-map{
+.tour-map {
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    display: none;
+    &.show {
+        display: block;
+    }
+}
+
+/* .tour-map{
   display: none;
   &.is-visible{
     display: flex;
@@ -15,6 +26,18 @@
     height:auto;
   }
 }
+
+.tour-map-wrapper{
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    display: none;
+    &.show {
+        display: block;
+    }
+}
+
 
 .tour-map-wrapper{
     position:relative;
@@ -35,3 +58,4 @@
   height: 5px;
   border-radius: 50%;
 }
+ */

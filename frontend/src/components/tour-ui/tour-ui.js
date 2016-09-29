@@ -25,7 +25,10 @@ class TourUi extends Component {
       homeVisible:false,
       //return home
       experiencePaused:false,
-      showInstruction:true
+      showInstruction:true,
+
+      mapText:'MAP',
+      homeText:'HOME'
     }
   }
 
@@ -39,6 +42,10 @@ class TourUi extends Component {
       this.setState({experiencePaused:_target})
         experiencePaused(_target)
     })
+
+    /*this.refs.startButton.addEventListener(()=>{
+
+    }, false)*/
   }
 
   _renderInstructions(){
@@ -54,7 +61,7 @@ class TourUi extends Component {
             </p>
             <p>Use the compass as your guide around the neighbourhood.</p>
             <p>If you experience any page reloads, do not be alarmed, just press this button</p>
-            <button ref="startButton" onClick={()=>{
+            <button ref="startButton" onTouchEnd={()=>{
               this.refs.tour.classList.add('hide')
               this.refs.instruction.classList.add('is-hidden')
               this.setState({showInstruction:false})
@@ -75,21 +82,39 @@ class TourUi extends Component {
 
     return(<div className="tour-ui--buttons">
           <div className="tour-ui--btn tour-mapbutton">
-            <img src={`${IMAGE_DIR}home-btn.svg`} onClick={()=>{
+            <span onClick={()=>{
+              let _target  = !this.state.experiencePaused
+              this.setState({experiencePaused:_target})
+              this.setState({homeText: (_target) ? 'BACK' : 'HOME'})
+              experiencePaused(_target)
+            }}>{this.state.homeText}</span>
+          </div>
+          <div className="tour-ui--btn tour-mapbutton">
+            <span onClick={()=>{
+              let _target  = !this.state.mapVisible
+              this.setState({mapText: (_target) ? 'BACK' : 'MAP'})
+              this.setState({mapVisible:_target})
+              showMap(_target)
+            }}>{this.state.mapText}</span>
+
+          </div>
+      </div>)
+  }
+
+  /*
+
+  <img src={`${IMAGE_DIR}home-btn.svg`} onClick={()=>{
               let _target  = !this.state.experiencePaused
               this.setState({experiencePaused:_target})
               experiencePaused(_target)
             }}></img>
-          </div>
-          <div className="tour-ui--btn tour-mapbutton">
-            <img src={`${IMAGE_DIR}burger-btn.svg`} onClick={()=>{
+
+  <img src={`${IMAGE_DIR}burger-btn.svg`} onClick={()=>{
               let _target  = !this.state.mapVisible
               this.setState({mapVisible:_target})
               showMap(_target)
             }}></img>
-          </div>
-      </div>)
-  }
+  */
 
   _renderHome(){
     if(this.state.experiencePaused){

@@ -5,3 +5,15 @@
 	width: 100%;
 	height: 100%;
 }
+
+.back-btn{
+  position:absolute;
+  left: 20px;
+  top:20px;
+}
+.close-btn{
+  text-decoration: none;
+  color: $c-black;
+  height:30px;
+  padding: 10px;
+}

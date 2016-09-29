@@ -4,6 +4,7 @@ import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import $ from 'jquery'
+import TweenLite from 'gsap'
 import {
   IMAGE_DIR
 } from '../../constants/config';
@@ -21,6 +22,7 @@ class Compass extends Component {
     super()
     this.state = {
       bearing: 0,
+      heading: 0,
       orientation: 0,
       info: "Info..."
     };
@@ -30,7 +32,7 @@ class Compass extends Component {
   _initComp() {
     let _self = this
     window.Compass.init((method) => {
-      console.log('window.Compass heading by ' + method);
+      this.setState({ 'info': 'window.Compass heading by ' + method })
     });
 
     window.Compass.watch((heading) => {
@@ -61,6 +63,7 @@ class Compass extends Component {
         this._initComp()
       }, 2000)
       //this.hideCompass()
+
   }
 
   componentWillReceiveProps(nextProps) {
@@ -85,6 +88,7 @@ class Compass extends Component {
           <div className="compass-title">next location:{tour.nextLocation.id}</div>
           <div className="compass-distance">{tour.nextLocation.distance} meters away</div>
           <div className="compass-distance">{this.state.bearing}</div>
+          <div className="compass-distance">heading:{this.state.heading}</div>
           <div className="compass-distance">{resize.orientation}</div>
           <div className="compass-distance">{this.state.info}</div>
         </div>
@@ -103,9 +107,18 @@ class Compass extends Component {
   }
 
   rotateCompass(heading) {
+    //this.setState({ 'heading': heading})
+
     if (!isNaN(heading) &&
+      this.$compassArrow &&
       !this._compassHidden) {
-      this.$compassArrow.css('transform', 'rotate(' + (-heading + this.state.bearing) + 'deg)');
+
+      /*this.setState({ 'info': `_compassHidden:${this._compassHidden}...
+      ${(-heading + this.state.bearing)}...
+      this.$compassArrow: ${!!this.$compassArrow}` })*/
+
+      TweenMax.set(this.refs.compassArrow, {rotation:(-heading + this.state.bearing)});
+      //this.$compassArrow.css('-webkit-transform', 'rotate('(-heading + this.state.bearing) + 'deg)');
       //this.$compassArrow.css('transformOrigin', '50% 50%');
       /*TweenMax.set(this.refs.compassArrow, {
         rotation: heading,
