@@ -102,6 +102,9 @@ const M = (() => {
   }
 
   function pause() {
+    if(_el){
+      _el.src = ""
+    }
     _paused = true
   }
 

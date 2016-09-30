@@ -71,9 +71,9 @@ const HOME_AREA = [
   { id: 'loc3', latitude: 51.584306, longitude: -0.105563, radius: 7 },
 ]
 const ALHAMBRA = [
-  { id: 'loc0', latitude: 37.7987, longitude: -122.42243, radius: 30 },
-  { id: 'loc1', latitude: 37.79831, longitude: -122.42219, radius: 10 },
-  { id: 'loc2', latitude: 37.79812, longitude: -122.42214, radius: 15 },
+  { id: 'loc0', latitude: 37.7987, longitude: -122.42243, radius: 13 },
+  { id: 'loc1', latitude: 37.79831, longitude: -122.42219, radius: 13 },
+  { id: 'loc2', latitude: 37.79812, longitude: -122.42214, radius: 12 },
   { id: 'loc3', latitude: 37.79795, longitude: -122.42186, radius: 12 },
   { id: 'loc4', latitude: 37.797872, longitude: -122.421611, radius: 11 },
   { id: 'loc5', latitude: 37.79793, longitude: -122.42119, radius: 16 },
@@ -166,7 +166,7 @@ class Deriveur extends Component {
       ALHAMBRA, {
         noVisualMap: true,
         noGeo: false,
-        mapUpdateSpeed: 2000,
+        mapUpdateSpeed: 3500,
         filterOnlyAudioFormats: 'mp3', //Detector.IS_IOS ? 'mp3' : 'ogg',
         assetsUrl: REMOTE_ASSETS_DIR
       })

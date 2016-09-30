@@ -31,7 +31,10 @@ class Sequence extends Component {
     if (tour.locationIndex !== _n &&
       !isNaN(_n)
     ) {
-      this._newLocation(nextProps.tour.locationIndex)
+      clearTimeout(this._ccc)
+      this._ccc = setTimeout(()=>{
+        this._newLocation(nextProps.tour.locationIndex)
+      }, 5000)
     } else {
       //MagipackPlayer.hide()
     }
@@ -51,6 +54,7 @@ class Sequence extends Component {
       this.hide()
     }
     if(tour.state === 'in' && nextProps.tour.state === 'out'){
+      clearTimeout(this._ccc)
       MagipackPlayer.destroy()
     }
   }

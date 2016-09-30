@@ -63,8 +63,8 @@ class Bodymovin extends Component {
     }
 
     if (!nextProps.tour.isIn) {
-      this._hideShort()
-      this._hideLong()
+      //this._hideShort()
+      //this._hideLong()
     }
 
   }
@@ -156,11 +156,11 @@ class Bodymovin extends Component {
     this._bodyAnimLong = BM.loadAnimation(_.assign({}, animData, options));
   }
 
-  shouldComponentUpdate(nextProps, nextState) {
+ /* shouldComponentUpdate(nextProps, nextState) {
     let _d = nextProps.tour.state !== this._state;
     this._state = nextProps.tour.state
     return _d
-  }
+  }*/
 
   render() {
     const { browser, bodymovin, tour } = this.props;
