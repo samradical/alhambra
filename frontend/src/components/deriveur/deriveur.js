@@ -84,7 +84,7 @@ const ALHAMBRA = [
   { id: 'loc10', latitude: 37.7983, longitude: -122.41925, radius: 16 },
   { id: 'loc11', latitude: 37.798566, longitude: -122.419047, radius: 13 },
   { id: 'loc12', latitude: 37.7989, longitude: -122.41911, radius: 13 },
-  { id: 'loc13', latitude: 37.799174, longitude: -122.419108, radius: 12 },
+  { id: 'loc13', latitude: 37.799100, longitude: -122.419140, radius: 12 },
   { id: 'loc14', latitude: 37.79761, longitude: -122.41869, radius: 15 },
   { id: 'loc15', latitude: 37.798639, longitude: -122.418456, radius: 13 },
   { id: 'loc16', latitude: 37.79811, longitude: -122.41894, radius: 16 },

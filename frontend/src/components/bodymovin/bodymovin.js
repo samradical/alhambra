@@ -41,13 +41,21 @@ class Bodymovin extends Component {
     }
 
     if (nextProps.tour.isIn) {
+      console.log("{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{");
+      console.log(tour.locationIndex , _n);
+      console.log(tour.isIn, nextProps.tour.isIn);
+      console.log("{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{");
       if (nextProps.resize.orientation !== this.state.orientation) {
         this._shortAnimation(nextProps.tour.location.id, { autoplay: true })
         this._longAnimation(nextProps.tour.location.id, { autoplay: true })
-      } else if (nextProps.tour.nextLocation &&
+      } else if (
+        nextProps.tour.nextLocation &&
         !isNaN(_n) &&
         tour.locationIndex !== _n
       ) {
+        this._shortAnimation(nextProps.tour.location.id, { autoplay: true })
+        this._longAnimation(nextProps.tour.location.id, { autoplay: true })
+      }else if(nextProps.tour.isIn && !tour.isIn){
         this._shortAnimation(nextProps.tour.location.id, { autoplay: true })
         this._longAnimation(nextProps.tour.location.id, { autoplay: true })
       }

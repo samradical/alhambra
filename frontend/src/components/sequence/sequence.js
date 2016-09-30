@@ -14,13 +14,13 @@ import {
 class Sequence extends Component {
 
   componentDidMount() {
-    const { browser, sequence, tour,showLocationCover } = this.props;
-    MagipackPlayer.setAnimationCompleteCallback(()=>{
+    const { browser, sequence, tour, showLocationCover } = this.props;
+    MagipackPlayer.setAnimationCompleteCallback(() => {
       showLocationCover(true)
     })
   }
 
-  componentWillUnmount(){
+  componentWillUnmount() {
     MagipackPlayer.destroy()
   }
 
@@ -32,20 +32,23 @@ class Sequence extends Component {
       !isNaN(_n)
     ) {
       clearTimeout(this._ccc)
-      this._ccc = setTimeout(()=>{
+      this._ccc = setTimeout(() => {
         this._newLocation(nextProps.tour.locationIndex)
       }, 5000)
-    } else {
-      //MagipackPlayer.hide()
+    } else if (nextProps.tour.isIn && !tour.isIn) {
+      clearTimeout(this._ccc)
+      this._ccc = setTimeout(() => {
+        this._newLocation(nextProps.tour.locationIndex)
+      }, 5000)
     }
 
-    if(nextProps.tour.showLocationCover || nextProps.tour.dominantPlaying){
+    if (nextProps.tour.showLocationCover || nextProps.tour.dominantPlaying) {
       this.hide()
     }
 
     if (nextProps.tour.speakingPlaying) {
       this.show()
-    }else{
+    } else {
       this.hide()
     }
 
@@ -53,7 +56,7 @@ class Sequence extends Component {
     if (!nextProps.tour.isIn) {
       this.hide()
     }
-    if(tour.state === 'in' && nextProps.tour.state === 'out'){
+    if (tour.state === 'in' && nextProps.tour.state === 'out') {
       clearTimeout(this._ccc)
       MagipackPlayer.destroy()
     }
@@ -77,8 +80,8 @@ class Sequence extends Component {
     const { sequence } = this.props;
     let _l = sequence.toArray()
     let _o = _.assign({}, _l[index])
-    _o.images+=`?z=${Math.random()}`
-    _o.pack+=`?z=${Math.random()}`
+    _o.images += `?z=${Math.random()}`
+    _o.pack += `?z=${Math.random()}`
     MagipackPlayer.loadAndPlay(_o, this.refs.magiSrc)
   }
 
