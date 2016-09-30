@@ -7,7 +7,6 @@ import { loadBodymovin } from '../../actions/bodymovin';
 import { loadSequence } from '../../actions/sequence';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
-
 class App extends Component {
   static propTypes = {
     // own props
@@ -24,11 +23,11 @@ class App extends Component {
 
   componentDidMount() {
     const { loadAlhambra, loadBodymovin, loadSequence } = this.props;
-    setTimeout(()=>{
+    setTimeout(() => {
       loadAlhambra()
       loadBodymovin()
       loadSequence()
-    },500)
+    }, 500)
   }
 
   render() {
@@ -40,8 +39,7 @@ class App extends Component {
   }
 }
 
-export default connect(state => ({
-}), {
+export default connect(state => ({}), {
   loadAlhambra,
   loadBodymovin,
   loadSequence,

@@ -12,6 +12,7 @@ import TourMap from '../../components/tour-map/tour-map';
 import TourHome from '../../components/tour-home/tour-home';
 import TourUi from '../../components/tour-ui/tour-ui';
 import Dervieur from '../../components/deriveur/deriveur';
+import NotFound from '../notfound-page/notfound-page';
 class TourPage extends Component {
 
   static propTypes = {
@@ -25,6 +26,29 @@ class TourPage extends Component {
 
   render() {
     const { browser, alhambra, bodymovin, tour } = this.props;
+
+    let _pass = true
+    if (Detector.IS_DESKTOP) {
+      _pass = false
+    } else {
+      if (Detector.IS_MOBILE) {
+        if (Detector.IS_IPHONE) {
+          if (Detector.IOS_VERSION < 10) {
+            _pass = false
+          }
+        } else if (Detector.IS_ANDROID) {
+          if (Detector.ANDROID_VERSION < 4) {
+            _pass = false
+          }
+        } else {
+          _pass = false
+        }
+      }
+    }
+    if (!_pass) {
+      return (<NotFound/>)
+    }
+
     if (!alhambra.size) {
       return (
       <div className="o-page tour-page">
