@@ -9,7 +9,7 @@ var readDir = require('readdir');
 const UTILS = require('./utils')
 const QUALITY = 7
 
-const FINAL_UPLOAD = '../../www-assets/tour/'
+const FINAL_UPLOAD = '../../www-assets'
 const RAW = argv.rawDir || '_preconverted'
 const CONTENT_DIR = PATH.join(__dirname, RAW)
 const SPLIT_MIN = argv.smin || 60
@@ -161,6 +161,10 @@ function convertSplited(q, dir = CONVERTED_SPLIT_DIR, withMp3 = false) {
     _formats.push('**.mp3')
   }
   var files = readDir.readSync(_splitDir, _formats, readDir.ABSOLUTE_PATHS);
+  files = files.filter(path=>{
+    return path.indexOf('play_along') > -1
+  })
+  console.log(files);
   files.forEach(path => {
     let _s = path.split('/')
     _s.forEach(folder => {
@@ -177,9 +181,9 @@ function convertSplited(q, dir = CONVERTED_SPLIT_DIR, withMp3 = false) {
       _temp = `${Math.random()}${_name}`
     }
     let _outFile = PATH.join(_dir, `${_temp}`)
-    let _c = `ffmpeg -i ${path} -q:a ${q} -acodec libmp3lame -y ${_outFile}.mp3`
+    let _c = `ffmpeg -i ${path} -q:a ${q} -acodec libmp3lame -y -t 20 ${_outFile}.mp3`
     exec(_c)
-    exec(`ffmpeg -i ${path} -q:a ${q} -y ${_outFile}.ogg`)
+    exec(`ffmpeg -i ${path} -q:a ${q} -y -t 20 ${_outFile}.ogg`)
     if (PATH.parse(path).ext === '.mp3') {
       FS.unlinkSync(path)
       FS.renameSync(`${_outFile}.mp3`, PATH.join(_dir, `${_base}.mp3`))
@@ -249,7 +253,7 @@ function copy(sourceDir = '', uploadDir = FINAL_UPLOAD) {
 /*
 node prepare_upload.js --rawDir "../_upload" --upload
 */
-function upload(dir = "../../www-assets") {
+function upload(dir = FINAL_UPLOAD) {
   let _uploadDir = PATH.join(CONTENT_DIR, dir)
     /* let _splitDir = PATH.join(CONTENT_DIR, CONVERTED_SPLIT_DIR)
      let _uploadDir = PATH.join(CONTENT_DIR, CONVERTED_UPLOAD_DIR)

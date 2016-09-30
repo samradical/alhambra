@@ -86,7 +86,7 @@ const ALHAMBRA = [
   { id: 'loc12', latitude: 37.7989, longitude: -122.41911, radius: 13 },
   { id: 'loc13', latitude: 37.799174, longitude: -122.419108, radius: 12 },
   { id: 'loc14', latitude: 37.79761, longitude: -122.41869, radius: 15 },
-  { id: 'loc15', latitude: 37.798562, longitude: -122.419014, radius: 10 },
+  { id: 'loc15', latitude: 37.798639, longitude: -122.418456, radius: 13 },
   { id: 'loc16', latitude: 37.79811, longitude: -122.41894, radius: 16 },
 ]
 const HOME_AREA_WALK = [
@@ -164,8 +164,8 @@ class Deriveur extends Component {
 
     this._devriveur = new Dervieur(alhambra.toArray(),
       ALHAMBRA, {
-        noVisualMap: false,
-        noGeo: true,
+        noVisualMap: true,
+        noGeo: false,
         mapUpdateSpeed: 3500,
         filterOnlyAudioFormats: 'mp3', //Detector.IS_IOS ? 'mp3' : 'ogg',
         assetsUrl: REMOTE_ASSETS_DIR

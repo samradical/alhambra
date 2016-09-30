@@ -33,7 +33,7 @@ class TourPage extends Component {
     } else {
       if (Detector.IS_MOBILE) {
         if (Detector.IS_IPHONE) {
-          if (Detector.IOS_VERSION < 10) {
+          if (Detector.IOS_VERSION < 7) {
             _pass = false
           }
         } else if (Detector.IS_ANDROID) {
