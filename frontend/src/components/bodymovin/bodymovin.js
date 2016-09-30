@@ -26,6 +26,11 @@ class Bodymovin extends Component {
 
   }
 
+  componentWillUnmount(){
+    this._destroyShort()
+    this._destroyLong()
+  }
+
   componentWillReceiveProps(nextProps) {
     let { tour } = this.props
     let _n = nextProps.tour.locationIndex
@@ -105,6 +110,13 @@ class Bodymovin extends Component {
     }
   }
 
+  _destroyLong() {
+    if (this._bodyAnimLong) {
+      this._bodyAnimLong.destroy()
+      this._bodyAnimLong = null
+    }
+  }
+
   _shortAnimation(locationId, options = {}) {
     const BM = window.bodymovin
     var animData = {
@@ -144,6 +156,12 @@ class Bodymovin extends Component {
     this._bodyAnimLong = BM.loadAnimation(_.assign({}, animData, options));
   }
 
+  shouldComponentUpdate(nextProps, nextState) {
+    let _d = nextProps.tour.state !== this._state;
+    this._state = nextProps.tour.state
+    return _d
+  }
+
   render() {
     const { browser, bodymovin, tour } = this.props;
     if (!bodymovin.size) {
@@ -151,10 +169,8 @@ class Bodymovin extends Component {
         <div></div>
       );
     }
-
     //this._newLocationAnimation()
     //this._onNewSpeaking()
-
     return (
       <div>
         <div id="shortDom" ref="bodymovinShort" className="o-page bodymovin"></div>

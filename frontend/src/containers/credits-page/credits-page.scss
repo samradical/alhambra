@@ -1,8 +1,9 @@
 .credits-page{
+  padding:40px;
+  box-sizing:border-box;
 }
 
 .credits-wrapper{
-  padding: 20px;
   margin-top: 40px;
   display: flex;
   align-items: flex-start;
@@ -11,5 +12,14 @@
 
   p{
     margin: 0;
+  }
+
+  a{
+    text-decoration: underline;
+    color: black;
+  }
+
+  h3{
+    margin:0;
   }
 }

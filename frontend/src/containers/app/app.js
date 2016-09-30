@@ -7,6 +7,7 @@ import { loadBodymovin } from '../../actions/bodymovin';
 import { loadSequence } from '../../actions/sequence';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
+
 class App extends Component {
   static propTypes = {
     // own props

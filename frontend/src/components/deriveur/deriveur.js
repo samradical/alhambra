@@ -133,9 +133,9 @@ class Deriveur extends Component {
     let _t = nextProps.tour
     if (this.state.experiencePaused !== _t.experiencePaused) {
       if (_t.experiencePaused) {
-        this._devriveur.pause()
+        //this._devriveur.pause()
       } else {
-        this._devriveur.resume()
+        //this._devriveur.resume()
       }
       this.setState({ experiencePaused: _t.experiencePaused })
     }
@@ -158,10 +158,11 @@ class Deriveur extends Component {
     if (this._devriveur) {
       return
     }
+
     this._devriveur = new Dervieur(alhambra.toArray(),
       ALHAMBRA, {
-        noVisualMap: false,
-        noGeo: true,
+        noVisualMap: true,
+        noGeo: false,
         mapUpdateSpeed: 2000,
         filterOnlyAudioFormats: 'mp3',//Detector.IS_IOS ? 'mp3' : 'ogg',
         assetsUrl: REMOTE_ASSETS_DIR
@@ -228,9 +229,9 @@ class Deriveur extends Component {
         <div></div>
       );
     }
-
     return (
-      <div ref="deriveur" className="deriveur"></div>
+      <div ref="deriveur" className="deriveur">
+      </div>
     );
   }
 }

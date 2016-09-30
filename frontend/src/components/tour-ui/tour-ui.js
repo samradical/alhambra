@@ -32,20 +32,28 @@ class TourUi extends Component {
     }
   }
 
+  componentWillUnmount() {
+    emitter.o('tour:home:close')
+  }
+
   componentDidMount() {
     const {
       showMap,
       experiencePaused,
     } = this.props
-    emitter.on('tour:home:close', ()=>{
-      let _target  = !this.state.experiencePaused
-      this.setState({experiencePaused:_target})
-        experiencePaused(_target)
-    })
+  }
 
-    /*this.refs.startButton.addEventListener(()=>{
-
-    }, false)*/
+  componentWillReceiveProps(nextProps) {
+    const {
+      tour,
+    } = this.props
+    let _n = nextProps.tour.experiencePaused
+    if(_n !== tour.experiencePaused){
+      this.setState({experiencePaused:_n})
+      this.setState({homeText: (_n) ? 'BACK' : 'HOME'})
+      this.refs.homeBtn.classList.remove('is-hidden')
+      this.refs.mapBtn.classList.remove('is-hidden')
+    }
   }
 
   _renderInstructions(){
@@ -53,20 +61,19 @@ class TourUi extends Component {
       return (<div></div>)
     }
     return(<div ref="instruction"className="instruc-wrapper">
-            <h3>Welcome to the Alhambra walking tour</h3>
-            <p>
-            The experience requires your phone to be awake at all times. Please disable the auto-lock.
-            On iOS: Settings > General > Auto-lock > Never
-            On Android:...
-            </p>
-            <p>Use the compass as your guide around the neighbourhood.</p>
-            <p>If you experience any page reloads, do not be alarmed, just press this button</p>
-            <button ref="startButton" onTouchEnd={()=>{
+            <h3>Welcome to the Alhambra Walking Tour</h3>
+            <p>The <span className="map">MAP</span> shows points of interest; let the arrow be your guide around the neighbourhood.</p>
+            <hr></hr>
+            <p className="ins-tech">The experience requires your phone to be awake at all times. Please disable the auto-lock.</p>
+            <p className="ins-tech"><i>iOS</i>: Settings > General > Auto-lock > Never</p>
+            <p className="ins-tech"><i>Android</i>: Menu > Settings > Screen/Display > Timeout > Never</p>
+            <br></br>
+            <button ref="startButton" className="tourstart-btn" onTouchEnd={()=>{
               this.refs.tour.classList.add('hide')
               this.refs.instruction.classList.add('is-hidden')
               this.setState({showInstruction:false})
               emitter.emit('tour:start')
-            }}>Start the tour</button>
+            }}>START THE TOUR</button>
    </div>)
   }
 
@@ -81,19 +88,25 @@ class TourUi extends Component {
     }
 
     return(<div className="tour-ui--buttons">
-          <div className="tour-ui--btn tour-mapbutton">
-            <span onClick={()=>{
+          <div ref="homeBtn" className="tour-ui--btn tour-mapbutton">
+            <span  onClick={()=>{
               let _target  = !this.state.experiencePaused
               this.setState({experiencePaused:_target})
               this.setState({homeText: (_target) ? 'BACK' : 'HOME'})
+              this.refs.mapBtn.classList[(
+                _target ? 'add' : 'remove'
+                )]('is-hidden')
               experiencePaused(_target)
             }}>{this.state.homeText}</span>
           </div>
-          <div className="tour-ui--btn tour-mapbutton">
+          <div ref="mapBtn" className="tour-ui--btn tour-mapbutton">
             <span onClick={()=>{
               let _target  = !this.state.mapVisible
               this.setState({mapText: (_target) ? 'BACK' : 'MAP'})
               this.setState({mapVisible:_target})
+              this.refs.homeBtn.classList[(
+                _target ? 'add' : 'remove'
+                )]('is-hidden')
               showMap(_target)
             }}>{this.state.mapText}</span>
 
@@ -121,8 +134,6 @@ class TourUi extends Component {
       return(<TourHome/>)
     }
   }
-
-  componentWillReceiveProps(nextProps) {}
 
   render() {
     const { browser, tour } = this.props;

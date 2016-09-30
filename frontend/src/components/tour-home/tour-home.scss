@@ -1,4 +1,5 @@
 @import 'media-queries';
+@import 'fonts';
 
 .tour-home{
   display: none;
@@ -8,16 +9,17 @@
 
   justify-content: center;
   align-content: center;
-  background-color:#B2B2B2;
+  background-color:white;
 
   img{
     width: 100%;
     height:auto;
+    transform: scale(0.9);
   }
 
   @media #{$mq-portrait} {
     img{
-      transform: rotate(90deg);
+      transform: rotate(90deg) scale(0.9);
     }
   }
 }
@@ -27,30 +29,52 @@
   left:0;
 }
 
+.home-text{
+  color:black;
+}
+
+.home--title{
+  letter-spacing: 4px;
+  font-size: $fs-title;
+  text-align: center;
+  white-space: nowrap;
+
+  @media #{$mq-portrait} {
+    white-space: normal;
+    top:10%;
+  }
+}
+
 .home-top{
   position: absolute;
   left:50%;
-  top:10%;
-  transform:translateX(-50%) translateY(-50%);
+  top:24px;
+  transform:translateX(-50%) translateY(0%);
+  @media #{$mq-portrait} {
+    top:10%;
+  }
 }
 
 .home-right{
   position: absolute;
-  left:90%;
+  right:20px;
   top:50%;
-  transform:translateX(-50%) translateY(-50%);
+  transform:translateX(0%) translateY(-50%);
 }
 
 .home-bottom{
   position: absolute;
   left:50%;
-  top:90%;
-  transform:translateX(-50%) translateY(-50%);
+  bottom:20px;
+  transform:translateX(-50%) translateY(0%);
+  @media #{$mq-portrait} {
+    top:80%;
+  }
 }
 
 .home-left{
   position: absolute;
-  left:10%;
+  left:20px;
   top:50%;
-  transform:translateX(-50%) translateY(-50%);
+  transform:translateX(0%) translateY(-50%);
 }

@@ -4,7 +4,7 @@ import {
   IMAGE_DIR,
   TIME_ON_LOCATION_COVER,
 } from '../../constants/config';
-
+import { experiencePaused } from '../../actions/tour';
 import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
 import _ from 'lodash';
@@ -18,15 +18,8 @@ class TourMap extends Component {
     super()
   }
 
-  componentDidMount() {}
-
-  componentWillReceiveProps(nextProps) {
-    let _t = nextProps.tour
-    if (_t.experiencePaused) {
-      this.show()
-    } else {
-      this.hide()
-    }
+  componentDidMount() {
+    this.show()
   }
 
   show() {
@@ -39,6 +32,8 @@ class TourMap extends Component {
 
   render() {
     const {
+      showMap,
+      experiencePaused,
     } = this.props
 
     return ( <div
@@ -46,19 +41,13 @@ class TourMap extends Component {
       ref="tourHome"
       >
       <img src={`${IMAGE_DIR}home.svg`}></img>
-        <div className="o-page">
-          <span className="home-top">ALHAMBRA</span>
-          <Link key={'credits'} to={`credits`}>
-            <span className="home-right">Credits</span>
-          </Link>
-          <Link key={'walk'} to={`walk`} onClick={()=>{
-            emitter.emit('tour:home:close')
-          }}>
-            <span className="home-bottom">Tour</span>
-          </Link>
-          <Link key={'about'} to={`about`}>
-            <span className="home-left">About</span>
-          </Link>
+        <div className="o-page tour-home--menu">
+          <span className="home--title home-text home-top"><strong>THE ALHAMBRA PROJECT</strong></span>
+            <a href={"http://"+window.location.host + process.env.APP_DOMAIN+"/credits"} className="home-text home-right"><strong>CREDITS</strong></a>
+            <a href={"http://"+window.location.host +process.env.APP_DOMAIN+"/map"}className="home-text home-left"><strong>MAP</strong></a>
+            <span className="home-text home-bottom" onClick={()=>{
+              experiencePaused(false)
+            }}><strong>BACK</strong></span>
         </div>
       </div>
     );
@@ -69,4 +58,5 @@ export default connect(({ browser, tour }) => ({
   browser,
   tour,
 }), {
+  experiencePaused,
 })(TourMap);

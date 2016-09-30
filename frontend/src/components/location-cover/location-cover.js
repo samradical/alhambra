@@ -24,6 +24,14 @@ class LocationCover extends Component {
     this.setState({ coverStyle: { backgroundImage: `url()` } })
   }
 
+  componentWillUnmount(){
+    clearTimeout(this._to)
+    if (this._preloader) {
+      this._preloader.destroy()
+      this._preloader = null
+    }
+  }
+
   componentWillReceiveProps(nextProps) {
     const { browser, tour, showLocationCover } = this.props;
     let _n = nextProps.tour.locationIndex

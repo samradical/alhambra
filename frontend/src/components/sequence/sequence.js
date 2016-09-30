@@ -20,6 +20,10 @@ class Sequence extends Component {
     })
   }
 
+  componentWillUnmount(){
+    MagipackPlayer.destroy()
+  }
+
   componentWillReceiveProps(nextProps) {
     const { browser, sequence, tour } = this.props;
     let _n = nextProps.tour.locationIndex
@@ -46,6 +50,9 @@ class Sequence extends Component {
     if (!nextProps.tour.isIn) {
       this.hide()
     }
+    if(tour.state === 'in' && nextProps.tour.state === 'out'){
+      MagipackPlayer.destroy()
+    }
   }
 
   hide() {
@@ -71,6 +78,11 @@ class Sequence extends Component {
     MagipackPlayer.loadAndPlay(_o, this.refs.magiSrc)
   }
 
+  shouldComponentUpdate(nextProps, nextState) {
+    let _d = nextProps.tour.state !== this._state;
+    this._state = nextProps.tour.state
+    return _d
+  }
 
 
   render() {

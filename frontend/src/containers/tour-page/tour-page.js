@@ -4,7 +4,6 @@ import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
 
-import Dervieur from '../../components/deriveur/deriveur';
 import Bodymovin from '../../components/bodymovin/bodymovin';
 import Sequence from '../../components/sequence/sequence';
 import Compass from '../../components/compass/compass';
@@ -12,7 +11,7 @@ import LocationCover from '../../components/location-cover/location-cover';
 import TourMap from '../../components/tour-map/tour-map';
 import TourHome from '../../components/tour-home/tour-home';
 import TourUi from '../../components/tour-ui/tour-ui';
-
+import Dervieur from '../../components/deriveur/deriveur';
 class TourPage extends Component {
 
   static propTypes = {

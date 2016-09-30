@@ -1,9 +1,10 @@
+@import 'colors';
 .tour-ui{
   z-index: 10;
   box-sizing:border-box;
-  padding-right: 10px;
-  padding-left: 10px;
-  padding-top: 10px;
+  padding-right: 20px;
+  padding-left: 20px;
+  padding-top: 20px;
   &.hide{
     //pointer-events: none;
   }
@@ -22,8 +23,14 @@
 }
 
 .tour-mapbutton{
-  height: 30px;
   text-decoration: none;
+  background-color: white;
+  padding-left:4px;
+  padding-right:4px;
+
+    &.is-hidden{
+      visibility: hidden;
+    }
 }
 
 
@@ -31,4 +38,25 @@
   &.is-hidden{
     display: none;
   }
+
+  p{
+    margin:0;
+    .map{
+      background-color:white;
+      padding:4px;
+    }
+  }
+
+  hr{
+    width: 50%;
+  }
+}
+
+.tourstart-btn{
+  background-color:white;
+  padding:8px;
+}
+
+.ins-tech{
+  color:$c-grey-darkest;
 }

@@ -36,17 +36,15 @@ class HomePage extends Component {
       >
       <img src={`${IMAGE_DIR}home.svg`}></img>
         <div className="o-page tour-home--menu">
-          <Link key={'map'} to={`map`}>
-            <span className="home-top">MAP</span>
-          </Link>
+          <span className="home--title home-text home-top"><strong>THE ALHAMBRA PROJECT</strong></span>
           <Link key={'credits'} to={`credits`}>
-            <span className="home-right">Credits</span>
+            <span className="home-text home-right"><strong>CREDITS</strong></span>
           </Link>
           <Link key={'walk'} to={`walk`}>
-            <span className="home-bottom">Tour</span>
+            <span className="home-text home-bottom"><strong>TOUR</strong></span>
           </Link>
-          <Link key={'about'} to={`about`}>
-            <span className="home-left">About</span>
+          <Link key={'map'} to={`map`}>
+            <span className="home-text home-left"><strong>MAP</strong></span>
           </Link>
         </div>
       </div>
