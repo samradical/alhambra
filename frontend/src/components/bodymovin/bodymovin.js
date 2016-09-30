@@ -172,7 +172,7 @@ class Bodymovin extends Component {
     //this._newLocationAnimation()
     //this._onNewSpeaking()
     return (
-      <div>
+      <div className="o-page">
         <div id="shortDom" ref="bodymovinShort" className="o-page bodymovin"></div>
         <div id="longAmb" ref="bodymovinLong" className="o-page bodymovin"></div>
       </div>

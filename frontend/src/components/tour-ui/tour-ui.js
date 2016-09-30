@@ -15,6 +15,7 @@ import { Link } from 'react-router';
 import _ from 'lodash';
 import { connect } from 'react-redux';
 import Loader from 'assets-loader'
+import UI from '../../utils/sono_ui';
 
 class TourUi extends Component {
 
@@ -41,6 +42,22 @@ class TourUi extends Component {
       showMap,
       experiencePaused,
     } = this.props
+
+    let sound = window.sono.createSound({
+      src: [
+        `${process.env.REMOTE_ASSETS_DIR}assets/audio/dummy.mp3`,
+      ],
+      volume:0,
+      loop: false
+    });
+    let playerTop = UI.createPlayer({
+      el: this.refs.startButton,
+      sound: sound,
+      cb:()=>{
+        emitter.emit('tour:start')
+      }
+    });
+
   }
 
   componentWillReceiveProps(nextProps) {
@@ -68,11 +85,10 @@ class TourUi extends Component {
             <p className="ins-tech"><i>iOS</i>: Settings > General > Auto-lock > Never</p>
             <p className="ins-tech"><i>Android</i>: Menu > Settings > Screen/Display > Timeout > Never</p>
             <br></br>
-            <button ref="startButton" className="tourstart-btn" onTouchEnd={()=>{
+            <button ref="startButton" className="tourstart-btn" onClick={()=>{
               this.refs.tour.classList.add('hide')
               this.refs.instruction.classList.add('is-hidden')
               this.setState({showInstruction:false})
-              emitter.emit('tour:start')
             }}>START THE TOUR</button>
    </div>)
   }

@@ -1,3 +1,4 @@
+import H from 'howler'
 import dat from 'dat-gui';
 import emitter from '../../utils/emitter';
 import React, { Component, PropTypes } from 'react';
@@ -12,6 +13,8 @@ import { nextLocation } from '../../actions/tour';
 import { userCoordsChanged } from '../../actions/tour';
 import { connect } from 'react-redux';
 
+//import UI from '../../utils/sono_ui';
+//import Sono from '@stinkdigital/sono';
 import Dervieur from '@samelie/deriveur';
 import { LOCATIONS } from '@samelie/deriveur';
 import {
@@ -71,7 +74,7 @@ const ALHAMBRA = [
   { id: 'loc0', latitude: 37.7987, longitude: -122.42243, radius: 30 },
   { id: 'loc1', latitude: 37.79831, longitude: -122.42219, radius: 10 },
   { id: 'loc2', latitude: 37.79812, longitude: -122.42214, radius: 15 },
-  { id: 'loc3', latitude: 37.79795, longitude:-122.42186, radius: 12 },
+  { id: 'loc3', latitude: 37.79795, longitude: -122.42186, radius: 12 },
   { id: 'loc4', latitude: 37.797872, longitude: -122.421611, radius: 11 },
   { id: 'loc5', latitude: 37.79793, longitude: -122.42119, radius: 16 },
   { id: 'loc6', latitude: 37.797967, longitude: -122.420609, radius: 12 },
@@ -164,7 +167,7 @@ class Deriveur extends Component {
         noVisualMap: true,
         noGeo: false,
         mapUpdateSpeed: 2000,
-        filterOnlyAudioFormats: 'mp3',//Detector.IS_IOS ? 'mp3' : 'ogg',
+        filterOnlyAudioFormats: 'mp3', //Detector.IS_IOS ? 'mp3' : 'ogg',
         assetsUrl: REMOTE_ASSETS_DIR
       })
     this._devriveur.on('tour:nextlocation', (l) => {
@@ -218,7 +221,7 @@ class Deriveur extends Component {
 
     /*let GUI = new dat.GUI()
     GUI.add(O, 'activeSounds')*/
-      //GUI.close()
+    //GUI.close()
 
   }
 

@@ -22,13 +22,16 @@ class Compass extends Component {
     super()
     this._failC = 0
     this._bearing = 0
-    this._state = undefined
+    this._tourState = undefined
+    this._orientation = 0
+    this.state = {
+
+    }
   }
 
   _initComp() {
     let _self = this
     window.Compass.init((method) => {
-      this.setState({ 'info': 'window.Compass heading by ' + method })
     });
 
     this._cid = window.Compass.watch((heading) => {
@@ -42,12 +45,11 @@ class Compass extends Component {
       /* console.log(heading + _self.state.bearing +
          +_self.state.orientation);*/
       //console.log(_self.state.bearing);
-      _self.rotateCompass(heading - (-_self.state.orientation))
+      _self.rotateCompass(heading - (-_self._orientation))
     });
 
     window.Compass.noSupport(() => {
       console.error("NO COMP");
-      this.setState({ 'info': "NO COMP" })
       this._failC += 1
     });
   }
@@ -57,8 +59,8 @@ class Compass extends Component {
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    let _d = nextProps.tour.state !== this._state;
-    this._state = nextProps.tour.state
+    let _d = nextProps.tour.state !== this._tourState;
+    this._tourState = nextProps.tour.state
     return _d
   }
 
@@ -73,6 +75,7 @@ class Compass extends Component {
 
   componentWillReceiveProps(nextProps) {
     this._bearing = nextProps.tour.bearing
+    this._orientation = nextProps.resize.orientation
     if (nextProps.tour.state === 'out') {
       this.showCompass()
     } else {
@@ -121,7 +124,7 @@ class Compass extends Component {
       ${(-heading + this.state.bearing)}...
       this.$compassArrow: ${!!this.$compassArrow}` })*/
 
-      TweenMax.set(this.refs.compassArrow, { rotation: (-heading + this._bearing) });
+      window.TweenLite.set(this.refs.compassArrow, { rotation: (-heading + this._bearing) });
       //this.$compassArrow.css('-webkit-transform', 'rotate('(-heading + this.state.bearing) + 'deg)');
       //this.$compassArrow.css('transformOrigin', '50% 50%');
       /*TweenMax.set(this.refs.compassArrow, {

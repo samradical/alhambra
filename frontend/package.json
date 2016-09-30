@@ -8,6 +8,8 @@
     "es6-promise": "^3.2.1",
     "fastclick": "^1.0.6",
     "geolib": "^2.0.21",
+    "gsap": "^1.19.0",
+    "howler": "git://github.com/goldfire/howler.js.git#2.0",
     "immutable": "^3.8.1",
     "isomorphic-fetch": "^2.2.1",
     "jquery": "^3.1.0",
