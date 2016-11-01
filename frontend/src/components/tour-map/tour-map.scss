@@ -2,11 +2,17 @@
     background-position: center center;
     background-repeat: no-repeat;
     background-attachment: fixed;
-    background-size: cover;
+    background-size: contain;
     display: none;
     background-color: white;
     &.show {
         display: block;
+    }
+
+    .tour-map-info{
+      position: absolute;
+      left: 8px;
+      bottom: 8px;
     }
 }
 

@@ -126,16 +126,39 @@ class TourMap extends Component {
     this.refs.tourMap.classList.remove('show')
   }
 
+  _renderInfo() {
+    const { browser, tour } = this.props;
+    const { location, nextLocation } = tour
+
+    if (!tour.isIn && location.key) {
+      return (
+        <span className="location-name">
+        <strong><i>You headed towards location </i><u>{parseInt(location.key, 10) +1}</u>
+        <i>, {location.distance} meters away</i>
+      </strong>
+    </span>)
+    }else if(location.key){
+      return (
+        <span className="location-name">
+          <strong><i>You are at location </i><u>{parseInt(location.key, 10) +1}</u>
+        </strong>
+      </span>)
+    }
+  }
+
   render() {
     const { browser, tour } = this.props;
     const {
       showMap,
     } = this.props
-
+    const { location } = tour
     return (<div
       className = "o-page tour-map"
       ref="tourMap"
       style = { this.state.coverStyle }>
+        <div className="tour-map-info">
+          { this._renderInfo() }
+        </div>
       </div>);
     /*
     <div className="map-info">

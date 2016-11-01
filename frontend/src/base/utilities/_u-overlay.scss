@@ -11,10 +11,12 @@
   left: 40px;
   top:40px;
   z-index: 100;
+  user-select:none;
 }
 .close-btn{
   text-decoration: none;
   color: $c-black;
   background-color: white;
+  user-select:none;
   padding: 8px;
 }

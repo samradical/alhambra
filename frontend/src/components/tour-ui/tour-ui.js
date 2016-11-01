@@ -58,6 +58,9 @@ class TourUi extends Component {
       }
     });
 
+    emitter.on('geoerror', ()=>{
+      this.refs.uiButtons.classList.add('hide')
+    })
   }
 
   componentWillReceiveProps(nextProps) {
@@ -81,14 +84,18 @@ class TourUi extends Component {
             <h3>Welcome to the Alhambra Walking Tour</h3>
             <p>The <span className="map">MAP</span> shows points of interest; let the arrow be your guide around the neighbourhood.</p>
             <hr></hr>
-            <p className="ins-tech">The experience requires your phone to be awake at all times. Please disable the auto-lock.</p>
-            <p className="ins-tech"><i>iOS</i>: Settings > General > Auto-lock > Never</p>
-            <p className="ins-tech"><i>Android</i>: Menu > Settings > Screen/Display > Timeout > Never</p>
+            <p className="ins-tech bold small">The experience requires your phone to be awake at all times.</p>
+            <p className="ins-tech detail small">Please disable the auto-lock:</p>
+            <p className="ins-tech detail"><i>iOS</i>: Settings > General > Auto-lock > Never</p>
+            <p className="ins-tech detail"><i>Android</i>: Menu > Settings > Screen/Display > Timeout > Never</p>
+            <p className="ins-tech bold small">Geolocation is also needed. You might receive a prompt upon starting, if not, follow these instrcutions and refresh the page.</p>
+            <p className="ins-tech detail"><i>iOS</i>: Settings > Privacy > Location Services > Safari > While Using</p>
+            <p className="ins-tech detail"><i>Android</i>: <a href="https://support.google.com/accounts/answer/3467281?hl=en" target="_blank">Turn location on or off for your device</a></p>
             <br></br>
             <button ref="startButton" className="tourstart-btn" onClick={()=>{
               this.refs.tour.classList.add('hide')
-              this.refs.instruction.classList.add('is-hidden')
               this.setState({showInstruction:false})
+              this.refs.instruction.classList.add('is-hidden')
             }}>START THE TOUR</button>
    </div>)
   }
@@ -103,7 +110,7 @@ class TourUi extends Component {
       return (<div></div>)
     }
 
-    return(<div className="tour-ui--buttons">
+    return(<div  ref="uiButtons" className="tour-ui--buttons">
           <div ref="homeBtn" className="tour-ui--btn tour-mapbutton">
             <span  onClick={()=>{
               let _target  = !this.state.experiencePaused

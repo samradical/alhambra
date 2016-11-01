@@ -8,6 +8,7 @@ import TweenLite from 'gsap'
 import {
   IMAGE_DIR
 } from '../../constants/config';
+import emitter from '../../utils/emitter';
 import CUtil from './compass_util'
 
 class Compass extends Component {
@@ -71,6 +72,10 @@ class Compass extends Component {
       this._initComp()
     }, 2000)
     this.hideCompass()
+
+    emitter.on('geoerror', ()=>{
+      this.hideCompass()
+    })
   }
 
   componentWillReceiveProps(nextProps) {

@@ -117,7 +117,8 @@ class Deriveur extends Component {
   constructor() {
     super()
     this.state = {
-      experiencePaused: false
+      experiencePaused: false,
+      geoError:false
     };
   }
 
@@ -187,6 +188,11 @@ class Deriveur extends Component {
         state: 'out'
       })
     })
+    this._devriveur.on('map:error', () => {
+      console.error('MAP GEO ERROR');
+      emitter.emit('geoerror')
+      this.setState({'geoError':true})
+    })
     this._devriveur.on('map:bearing', (bearing) => {
       bearingChanged(bearing)
     })
@@ -231,6 +237,14 @@ class Deriveur extends Component {
       return (
         <div></div>
       );
+    }
+    if (this.state.geoError) {
+      return(<div ref="instruction"className="o-page instruc-wrapper">
+            <h3>There was a problem with geolocation</h3>
+            <p className="ins-tech bold small">Follow these instrcutions and refresh the page.</p>
+            <p className="ins-tech detail"><i>iOS</i>: Settings > Privacy > Location Services > Safari > While Using</p>
+            <p className="ins-tech detail"><i>Android</i>: <a href="https://support.google.com/accounts/answer/3467281?hl=en" target="_blank">Turn location on or off for your device</a></p>
+          </div>)
     }
     return (
       <div ref="deriveur" className="deriveur">

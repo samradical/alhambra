@@ -39,6 +39,13 @@ class MapPage extends Component {
         style = { this.state.coverStyle }>
           <h1><i>SORRY THIS IS A MOBILE ONLY EXPERIENCE</i></h1>
           <h3>or you have an old OS version</h3>
+          <h1>
+            <i>
+            THERE IS A DESKTOP EXPERIENCE IN THE PIPELINE, PLEASE VISIT
+            <a href="https://add.dog" target="_blank"> ADddog </a>
+            FOR MORE INFORMATION
+            </i>
+          </h1>
         </div>
       </div>
     );

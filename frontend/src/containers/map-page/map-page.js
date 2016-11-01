@@ -42,11 +42,11 @@ class MapPage extends Component {
       <Link key={'/'} to={`/`}>
           <span className="back-btn close-btn">BACK</span>
       </Link>
-      <div
-      className = "o-page map-page"
-      ref="tourMap"
-      style = { this.state.coverStyle }>
-      </div>
+        <div
+        className = "o-page map-page"
+        ref="tourMap"
+        style = { this.state.coverStyle }>
+        </div>
       </div>
     );
   }

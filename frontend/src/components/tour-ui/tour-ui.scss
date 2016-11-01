@@ -14,6 +14,9 @@
   display: flex;
   align-content: center;
   justify-content: space-between;
+  &.hide{
+  display: none;
+  }
 }
 .tour-ui--btn {
   img{
@@ -25,8 +28,11 @@
 .tour-mapbutton{
   text-decoration: none;
   background-color: white;
-  padding-left:4px;
-  padding-right:4px;
+  padding-top:4px;
+  padding-bottom:4px;
+  padding-left:8px;
+  padding-right:8px;
+  text-decoration: underline;
 
     &.is-hidden{
       visibility: hidden;
@@ -35,6 +41,7 @@
 
 
 .instruc-wrapper{
+
   &.is-hidden{
     display: none;
   }
@@ -50,6 +57,11 @@
   hr{
     width: 50%;
   }
+
+  h3{
+    margin-top: 0px;
+    margin-bottom: 4px;
+  }
 }
 
 .tourstart-btn{
@@ -59,4 +71,17 @@
 
 .ins-tech{
   color:$c-grey-darkest;
+  &.detail{
+    padding-left:8px;
+  }
+  &.bold{
+    font-weight: bold;
+  }
+  &.small{
+    font-size: 13px;
+  }
+
+  a{
+    color: black;
+  }
 }
