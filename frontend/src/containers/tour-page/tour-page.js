@@ -45,9 +45,9 @@ class TourPage extends Component {
         }
       }
     }
-    if (!_pass) {
+    /*if (!_pass) {
       return (<NotFound/>)
-    }
+    }*/
 
     if (!alhambra.size) {
       return (

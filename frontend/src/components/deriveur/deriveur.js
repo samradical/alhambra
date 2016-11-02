@@ -165,8 +165,8 @@ class Deriveur extends Component {
 
     this._devriveur = new Dervieur(alhambra.toArray(),
       ALHAMBRA, {
-        noVisualMap: true,
-        noGeo: false,
+        noVisualMap: false,
+        noGeo: true,
         mapUpdateSpeed: 3500,
         filterOnlyAudioFormats: 'mp3', //Detector.IS_IOS ? 'mp3' : 'ogg',
         assetsUrl: REMOTE_ASSETS_DIR
