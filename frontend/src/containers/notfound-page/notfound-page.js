@@ -22,7 +22,6 @@ class MapPage extends Component {
   }
 
   componentDidMount() {
-    this.show()
   }
 
   render() {
