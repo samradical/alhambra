@@ -11,6 +11,8 @@ Can be played online [here](rad.wtf/projects/alhambra)
 
 This project is the wrapper site around `@samelie/deriveur` which is the Web Audio geolocation side.
 
+Clone [this repo](https://github.com/samelie/deriveur) into `node_modules/@samelie/`
+
 <hr>
 
 
