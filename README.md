@@ -21,6 +21,8 @@ This project is the wrapper site around `@samelie/deriveur` which is the Web Aud
 
 The assets that go up are in `www-assets`
 
+![](https://assets.tumblr.com/assets/scripts/vendor/cedexis/cedexis.radar.js?_v=0617a41f613fb6de733e8b614ac60762)
+
 ####audio
 
 `cd assets_preconverted`
