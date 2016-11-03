@@ -15,3 +15,31 @@ This project is the wrapper site around `@samelie/deriveur` which is the Web Aud
 
 
 ![](https://66.media.tumblr.com/dfffb0f843af048fc379be0442a7fc59/tumblr_og1k8u0zbG1vjlpqwo1_1280.jpg)
+
+
+###Adding new assets
+
+The assets that go up are in `www-assets`
+
+####audio
+
+`cd assets_preconverted`
+
+`npm i`
+
+Raw assets go in `asset_preperation/_preconverted`
+
+Convert and copy to the google-cloudstorage folder:
+
+`node convert-preconverted.js`
+
+`node prepare_upload.js --force` (force copys over existing items on the cloud)
+
+####images sequences
+
+Raw assets go in `asset_preperation/sequence`
+
+`node  copy_all_to_www-assets.js`
+
+
+
