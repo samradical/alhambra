@@ -42,6 +42,7 @@ build/*
 asset_preperation/sequence/**
 asset_preperation/sequence
 asset_preperation/sequence-out/*
+www
 www-assets
 asset_preperation/_preconverted
 _raw
