@@ -219,6 +219,9 @@ class Deriveur extends Component {
     })
 
     window.DERIVEUR_API = {
+      start:(coord)=>{
+        emitter.emit('tour:start')
+      },
       changeLocation:(coord)=>{
         this._devriveur.map.updatePosition({ coords: coord })
       }
