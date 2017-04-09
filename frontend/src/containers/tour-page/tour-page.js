@@ -48,7 +48,7 @@ class TourPage extends Component {
     /*if (!_pass) {
       return (<NotFound/>)
     }*/
-
+    console.log(alhambra);
     if (!alhambra.size) {
       return (
       <div className="o-page tour-page">

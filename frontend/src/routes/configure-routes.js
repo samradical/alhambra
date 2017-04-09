@@ -11,11 +11,7 @@ import CreditsPage from '../containers/credits-page/credits-page';
 export default function configureRoutes() {
   return (
     <Route path="/" component={App}>
-      <IndexRoute component={HomePage}/>
-      <Route path="/map" component={MapPage}></Route>
-      <Route path="/walk" component={TourPage}></Route>
-      <Route path="/about" component={AboutPage}></Route>
-      <Route path="/credits" component={CreditsPage}></Route>
+      <IndexRoute component={TourPage}/>
     </Route>
   );
 }

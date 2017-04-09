@@ -165,8 +165,8 @@ class Deriveur extends Component {
 
     this._devriveur = new Dervieur(alhambra.toArray(),
       ALHAMBRA, {
-        noVisualMap: !Detector.IS_DESKTOP,
-        noGeo: Detector.IS_DESKTOP,
+        noVisualMap: true,
+        noGeo: true,
         mapUpdateSpeed: 3500,
         filterOnlyAudioFormats: 'mp3', //Detector.IS_IOS ? 'mp3' : 'ogg',
         assetsUrl: REMOTE_ASSETS_DIR
@@ -218,6 +218,12 @@ class Deriveur extends Component {
       ambientPlayback(false)
     })
 
+    window.DERIVEUR_API = {
+      changeLocation:(coord)=>{
+        this._devriveur.map.updatePosition({ coords: coord })
+      }
+    }
+
     let O = {
       activeSounds: () => {
         let _sounds = this._devriveur.layers.layerSounds
@@ -233,6 +239,7 @@ class Deriveur extends Component {
 
   render() {
     const { browser, alhambra, tour } = this.props;
+    console.log(alhambra);
     if (!alhambra.size) {
       return (
         <div></div>

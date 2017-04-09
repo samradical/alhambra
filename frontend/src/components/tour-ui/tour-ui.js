@@ -26,7 +26,7 @@ class TourUi extends Component {
       homeVisible:false,
       //return home
       experiencePaused:false,
-      showInstruction:true,
+      showInstruction:false,
 
       mapText:'MAP',
       homeText:'HOME'
@@ -54,9 +54,11 @@ class TourUi extends Component {
       el: this.refs.startButton,
       sound: sound,
       cb:()=>{
-        emitter.emit('tour:start')
+        console.log("start");
       }
     });
+
+    emitter.emit('tour:start')
 
     emitter.on('geoerror', ()=>{
       this.refs.uiButtons.classList.add('hide')
@@ -168,9 +170,6 @@ class TourUi extends Component {
     return ( <div
       ref="tour"
       className = "o-page tour-ui">
-          {this._renderUi()}
-          {this._renderInstructions()}
-          {this._renderHome()}
       </div>
     );
   }
