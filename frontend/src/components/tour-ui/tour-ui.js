@@ -58,6 +58,7 @@ class TourUi extends Component {
       }
     });
 
+    //emitter.emit('tour:start')
 
     emitter.on('geoerror', ()=>{
       this.refs.uiButtons.classList.add('hide')

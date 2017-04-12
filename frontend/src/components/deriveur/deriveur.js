@@ -218,14 +218,18 @@ class Deriveur extends Component {
       ambientPlayback(false)
     })
 
-    window.DERIVEUR_API = {
-      start:(coord)=>{
+    window.addEventListener('message', (msg)=>{
+      switch(msg){
+        case "starr":
         emitter.emit('tour:start')
-      },
-      changeLocation:(coord)=>{
+        break;
+        case "changeLocation":
         this._devriveur.map.updatePosition({ coords: coord })
+        break;
       }
-    }
+    })
+
+
 
     let O = {
       activeSounds: () => {
