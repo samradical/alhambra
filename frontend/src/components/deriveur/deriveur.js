@@ -123,6 +123,16 @@ class Deriveur extends Component {
   }
 
   componentDidMount() {
+
+    window.ALHAMBRA_API = {
+      start:()=>{
+        emitter.emit('tour:start')
+      },
+      changeLocation:()=>{
+        this._devriveur.map.updatePosition({ coords: coord })
+      }
+    }
+
     emitter.on('tour:start', () => {
       this._initDeriveur()
     })
@@ -218,13 +228,12 @@ class Deriveur extends Component {
       ambientPlayback(false)
     })
 
+
     window.addEventListener('message', (msg)=>{
       switch(msg){
         case "starr":
-        emitter.emit('tour:start')
         break;
         case "changeLocation":
-        this._devriveur.map.updatePosition({ coords: coord })
         break;
       }
     })

@@ -49,5 +49,5 @@ ReactDom.render(
     <Router history={histroy}>
       {routes}
     </Router>
-  </Provider>, document.getElementById('app')
+  </Provider>, document.getElementById('alhambra-app')
 )
