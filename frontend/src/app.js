@@ -44,10 +44,16 @@ window.addEventListener("orientationchange",  () =>{
   })
 });
 
-ReactDom.render(
+setTimeout(()=>{
+
+  ReactDom.render(
   <Provider store={store}>
     <Router history={histroy}>
       {routes}
     </Router>
   </Provider>, document.getElementById('alhambra-app')
 )
+
+},2000)
+
+

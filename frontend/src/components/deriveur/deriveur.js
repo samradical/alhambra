@@ -128,8 +128,10 @@ class Deriveur extends Component {
       start:()=>{
         emitter.emit('tour:start')
       },
-      changeLocation:()=>{
-        this._devriveur.map.updatePosition({ coords: coord })
+      changeLocation:(coord)=>{
+        if(this._devriveur){
+          this._devriveur.map.updatePosition({ coords: coord })
+        }
       }
     }
 
@@ -222,6 +224,7 @@ class Deriveur extends Component {
       dominantPlayback(false)
     })
     this._devriveur.on('sound:ambient:playing', () => {
+      console.log();
       ambientPlayback(true)
     })
     this._devriveur.on('sound:ambient:ended', () => {
