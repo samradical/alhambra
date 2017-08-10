@@ -4,6 +4,7 @@ const {
 } = require('path')
 
 const constants = require('./webpack.constants')
+const BabiliPlugin = require("babili-webpack-plugin");
 
 const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
@@ -18,8 +19,8 @@ const CSS_LOADERS = {
 };
 
 const ENV_VARS = {
-  //APP_DOMAIN: '"/desktop-tour/"',
-  APP_DOMAIN: '"/thealhambraproject.com/tour/"',
+  APP_DOMAIN: '"/desktop-tour/"',
+  //APP_DOMAIN: '"/thealhambraproject.com/tour/"',
   //APP_DOMAIN: '"/"',
   ASSETS_DIR: '"https://storage.googleapis.com/samrad-alhambra/www-assets/"',
   REMOTE_ASSETS_DIR: '"https://storage.googleapis.com/samrad-alhambra/www-assets/"'
@@ -129,11 +130,7 @@ module.exports = env => {
         'process.env.NODE_ENV': JSON.stringify(isDev ? 'production' : 'development')
       }),
       // saves 711 kB!!
-      ifProd(new webpack.optimize.UglifyJsPlugin({
-        compress: {
-          screw_ie8: true, // eslint-disable-line
-          warnings: false,
-        },
+      ifProd(new BabiliPlugin({
       })),
       ifNotTest(new webpack.optimize.CommonsChunkPlugin({
         name: 'vendor'

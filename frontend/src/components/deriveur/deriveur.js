@@ -15,8 +15,8 @@ import { connect } from 'react-redux';
 
 //import UI from '../../utils/sono_ui';
 //import Sono from '@stinkdigital/sono';
-import Dervieur from '@samelie/deriveur';
-import { LOCATIONS } from '@samelie/deriveur';
+import Dervieur from 'deriveur';
+import { LOCATIONS } from 'deriveur';
 import {
   REMOTE_ASSETS_DIR
 } from '../../constants/config';
