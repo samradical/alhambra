@@ -4,6 +4,8 @@ import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
 
+import { loadBodymovin } from '../../actions/bodymovin';
+
 import Bodymovin from '../../components/bodymovin/bodymovin';
 import Sequence from '../../components/sequence/sequence';
 import Compass from '../../components/compass/compass';
@@ -77,5 +79,6 @@ export default connect(({ alhambra, bodymovin, browser, tour }) => ({
   browser,
   tour,
 }), {
+  loadBodymovin
 })(TourPage);
 

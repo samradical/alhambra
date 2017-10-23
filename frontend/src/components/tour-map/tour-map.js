@@ -12,7 +12,6 @@ import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
 import _ from 'lodash';
 import { connect } from 'react-redux';
-import Loader from 'assets-loader'
 import geolib from 'geolib'
 import $ from 'jquery'
 

@@ -4,6 +4,7 @@
     "es2015",
     "stage-0"
   ],
+  "compact" : false,
   "env": {
     "test": {
       "plugins": [

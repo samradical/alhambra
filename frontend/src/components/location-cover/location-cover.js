@@ -9,6 +9,7 @@ import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
 import _ from 'lodash';
 import { showLocationCover } from '../../actions/tour';
+import { coverLoaded } from '../../actions/location-cover';
 import { connect } from 'react-redux';
 
 import Loader from 'assets-loader'
@@ -33,6 +34,7 @@ class LocationCover extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    console.log(nextProps);
     const { browser, tour, showLocationCover } = this.props;
     let _n = nextProps.tour.locationIndex
     if (tour.locationIndex !== _n &&
@@ -53,6 +55,9 @@ class LocationCover extends Component {
 
     if (nextProps.tour.isIn && nextProps.tour.dominantPlaying) {
       this.hide()
+    }
+    if (nextProps.locationCover.loaded !== this.props.locationCover.loaded) {
+      window.LOADER_API.onCoverLoaded(nextProps.locationCover.loaded)
     }
 
     if (!nextProps.tour.isIn) {
@@ -79,6 +84,7 @@ class LocationCover extends Component {
   }
 
   _preload(url, callback) {
+    this.props.coverLoaded(false)
     if (this._preloader) {
       this._preloader.destroy()
       this._preloader = null
@@ -90,6 +96,7 @@ class LocationCover extends Component {
     })
     this._preloader.on('complete', (map) => {
       callback()
+      this.props.coverLoaded(true)
       this._preloader.destroy()
       this._preloader = null
     })
@@ -134,9 +141,11 @@ class LocationCover extends Component {
   }
 }
 
-export default connect(({ browser, tour }) => ({
+export default connect(({ browser, locationCover, tour }) => ({
   browser,
+  locationCover,
   tour,
 }), {
-  showLocationCover
+  showLocationCover,
+  coverLoaded
 })(LocationCover);

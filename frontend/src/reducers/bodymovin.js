@@ -1,18 +1,23 @@
 import {
+  LOAD_BODYMOVIN,
+  BODYMOVIN_LOADED,
   LOAD_BODYMOVIN_SUCCESS,
   LOAD_BODYMOVIN_ERROR,
-} from '../constants/action-types';
+} from "../constants/action-types"
 
-import _ from 'lodash';
-import { Record, Map, List } from 'immutable';
+import _ from "lodash"
+import { Record, Map, List } from "immutable"
 
 /**
  * Record is like a class, but immutable and with default values.
  * https://facebook.github.io/immutable-js/docs/#/Record
  */
-const InitialState = List;
+const InitialState = Record({
+  list: null,
+  loaded: false,
+})
 
-const initialState = new InitialState;
+const initialState = new InitialState()
 
 /**
  * [projects description]
@@ -22,18 +27,20 @@ const initialState = new InitialState;
  */
 export default function bodymovin(state = initialState, action) {
   switch (action.type) {
-    case LOAD_BODYMOVIN_SUCCESS:
-      {
-        let _s = new List([...action.payload])
-        return _s
-      }
-    case LOAD_BODYMOVIN_ERROR:
-      {
-        return state.set('hasFailed', true);
-      }
-    default:
-      {
-        return state;
-      }
+    case LOAD_BODYMOVIN: {
+      return state.set("loaded", false)
+    }
+    case BODYMOVIN_LOADED: {
+      return state.set("loaded", action.payload)
+    }
+    case LOAD_BODYMOVIN_SUCCESS: {
+      return state.set("list", new List([...action.payload]))
+    }
+    case LOAD_BODYMOVIN_ERROR: {
+      return state.set("loaded", false)
+    }
+    default: {
+      return state
+    }
   }
 }

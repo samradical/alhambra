@@ -1,5 +1,6 @@
 import {
   LOAD_SEQUENCE,
+  SEQUENCE_LOADED,
 } from '../constants/action-types';
 
 import { JSON_DIR } from '../constants/config';
@@ -15,5 +16,12 @@ export function loadSequence() {
           return _r;
         })
     },
+  };
+}
+
+export function sequenceLoaded(payload) {
+  return {
+    type: SEQUENCE_LOADED,
+    payload:payload
   };
 }

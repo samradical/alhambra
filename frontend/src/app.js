@@ -29,6 +29,12 @@ const store = configureStore({
 const histroy = syncHistoryWithStore(browserHistory, store);
 const routes = configureRoutes();
 
+window.LOADER_API = {
+  onBodymovinLoaded:()=>{},
+  onCoverLoaded:()=>{},
+  onSequenceLoaded:()=>{},
+}
+
 
 window.addEventListener('reszie', ()=>{
   store.dispatch({

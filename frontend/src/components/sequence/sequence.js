@@ -5,6 +5,7 @@ import { Link } from 'react-router';
 import _ from 'lodash';
 import { connect } from 'react-redux';
 import { showLocationCover } from '../../actions/tour';
+import { sequenceLoaded } from '../../actions/sequence';
 import MagipackPlayer from './magipack_player'
 
 import {
@@ -60,6 +61,10 @@ class Sequence extends Component {
       clearTimeout(this._ccc)
       MagipackPlayer.destroy()
     }
+
+    if (nextProps.sequence.loaded !== this.props.sequence.loaded) {
+      window.LOADER_API.onSequenceLoaded(nextProps.sequence.loaded)
+    }
   }
 
   hide() {
@@ -78,11 +83,15 @@ class Sequence extends Component {
 
   _newLocation(index) {
     const { sequence } = this.props;
-    let _l = sequence.toArray()
+    this.props.sequenceLoaded(false)
+    let _l = sequence.list.toArray()
     let _o = _.assign({}, _l[index])
     _o.images += `?z=${Math.random()}`
     _o.pack += `?z=${Math.random()}`
-    MagipackPlayer.loadAndPlay(_o, this.refs.magiSrc)
+    console.log(_o);
+    MagipackPlayer.loadAndPlay(_o, this.refs.magiSrc, ()=>{
+      this.props.sequenceLoaded(true)
+    })
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -94,7 +103,7 @@ class Sequence extends Component {
 
   render() {
     const { browser, sequence, tour } = this.props;
-    if (!sequence.size) {
+    if (!sequence.list.size) {
       return (
         <div></div>
       );
@@ -112,5 +121,6 @@ export default connect(({ sequence, browser, tour }) => ({
   browser,
   tour,
 }), {
-  showLocationCover
+  showLocationCover,
+  sequenceLoaded,
 })(Sequence);

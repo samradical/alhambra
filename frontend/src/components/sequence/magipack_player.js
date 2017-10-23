@@ -70,6 +70,7 @@ const M = (() => {
       _loader.destroy()
       _loader = null
     }
+    console.log(_src);
     _loader = new Loader({
       assets: _src
     })
@@ -123,12 +124,15 @@ const M = (() => {
     }
   }
 
-  function loadAndPlay(obj, el) {
+  function loadAndPlay(obj, el, cb) {
     if (el) {
       _el = el
     }
     load(obj, el, ()=>{
       play()
+      if(cb){
+        cb()
+      }
     })
   }
 

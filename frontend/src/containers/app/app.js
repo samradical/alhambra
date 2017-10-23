@@ -3,7 +3,7 @@ import './app.scss';
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { loadAlhambra } from '../../actions/alhambra';
-import { loadBodymovin } from '../../actions/bodymovin';
+import { loadBodymovin,bodymovinLoaded } from '../../actions/bodymovin';
 import { loadSequence } from '../../actions/sequence';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
@@ -28,6 +28,7 @@ class App extends Component {
       loadBodymovin()
       loadSequence()
     }, 500)
+
   }
 
   render() {

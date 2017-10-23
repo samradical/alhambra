@@ -4,6 +4,7 @@ import { createResponsiveStateReducer } from 'redux-responsive';
 
 import alhambra from './alhambra';
 import bodymovin from './bodymovin';
+import locationCover from './location-cover';
 import sequence from './sequence';
 import tour from './tour';
 import resize from './resize';
@@ -18,6 +19,7 @@ export default combineReducers({
   routing,
   tour,
   alhambra,
+  locationCover,
   bodymovin,
   sequence,
   resize,
